@@ -1,2 +1,3 @@
-# sm_nzinedev
-SOFT-MANAGE
+# CodeIgniter
+# Git and CI...
+ci testing
