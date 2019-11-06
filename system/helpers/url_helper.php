@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
@@ -107,6 +107,21 @@ if ( ! function_exists('current_url'))
 	}
 }
 
+/**
+ * query string 을 포함한 현재페이지 주소 전체를 return 합니다
+ */
+if ( ! function_exists('current_full_url')) {
+    function current_full_url()
+    {
+        $CI =& get_instance();
+
+        $url = $CI->config->site_url($CI->uri->uri_string());
+        $return = ($CI->input->server('QUERY_STRING'))
+            ? $url . '?' . $CI->input->server('QUERY_STRING') : $url;
+        return $return;
+    }
+}
+
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('uri_string'))
@@ -122,6 +137,25 @@ if ( ! function_exists('uri_string'))
 	{
 		return get_instance()->uri->uri_string();
 	}
+}
+
+if ( ! function_exists('uri_query_string'))
+{
+    /**
+     * URL Query String
+     *
+     * Returns the URI segments.
+     *
+     * @return	string
+     */
+    function uri_query_string()
+    {
+        $CI =& get_instance();
+
+        $return = ($CI->input->server('QUERY_STRING'))
+            ? '?' . $CI->input->server('QUERY_STRING') : '';
+        return $return;
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -393,10 +427,10 @@ if ( ! function_exists('auto_link'))
 	function auto_link($str, $type = 'both', $popup = FALSE)
 	{
 		// Find and replace any URLs.
-		if ($type !== 'email' && preg_match_all('#(\w*://|www\.)[^\s()<>;]+\w#i', $str, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER))
+		if ($type !== 'email' && preg_match_all('#(\w*://|www\.)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+(/([^\s()<>;]+\w)?/?)?#i', $str, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER))
 		{
 			// Set our target HTML if using popup links.
-			$target = ($popup) ? ' target="_blank"' : '';
+			$target = ($popup) ? ' target="_blank" rel="noopener"' : '';
 
 			// We process the links in reverse order (last -> first) so that
 			// the returned string offsets from preg_match_all() are not
