@@ -39,39 +39,24 @@
                         </thead>
                         <tbody>
                         <?php
-                        foreach ($stop_list as $lt) {
+                        foreach ($lists as $lt) {
                             ?>
                             <tr>
                                 <td>
-                                    <a href="/soft/view_stop/<?php echo $lt->idx ?>"><?php echo $lt->product_name; ?>
+                                    <a href="/soft/view_progress/<?php echo $lt['idx'] ?>"><?php echo nl2br($lt['product_name']); ?></a>
                                 </td>
-                                <td>
-                                    <?php echo $lt->version; ?>
-                                </td>
-                                <td>
-                                    <?php echo $lt->company; ?>
-                                </td>
-                                <td>
-                                    <?php echo $lt->purpose; ?>
-                                </td>
-                                <td>
-                                    <?php echo $lt->target; ?>
-                                </td>
-                                <td>
-                                    <?php echo $lt->serial_num; ?>
-                                </td>
-                                <td>
-                                    <?php if($lt->package) echo "√";?>
-                                </td>
-                                <td>
-                                    <?php echo $lt->license_numb; ?>
-                                </td>
-                                <td>
-                                    <?php echo $lt->keep_place; ?>
-                                </td>
-                                <td>
-                                    <?php echo $lt->remarks; ?>
-                                </td>
+                                <td><?php echo $lt['version']; ?></td>
+                                <td><?php echo $lt['company']; ?></td>
+                                <td><?php echo $lt['purpose']; ?></td>
+                                <td><?php echo nl2br($lt['target']); ?></td>
+                                <td><?php echo nl2br($lt['serial_num']); ?></td>
+                                <td><?php echo $lt['package']; ?></td>
+                                <td><?php if (($lt['license_numb']) > 0) echo $lt['license_numb']; ?></td>
+                                <td><?php echo $lt['keep_place']; ?></td>
+                                <!-- use_cnt는 임의적으로 만듬. serial_num의 필드값을 조회해서
+                                g_window,g_ms,g_hangul,g_quark,g_adobe,g_font,g_alzip의 테이블 product_number에 맞는 사용수를 체크한다.-->
+                                <td><?php echo $lt['use_cnt']; ?></td>
+                                <td><?php echo $lt['remarks']; ?></td>
                             </tr>
                             <?php
                         }

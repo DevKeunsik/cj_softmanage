@@ -54,6 +54,11 @@
                                 <?php
                             }
                             ?>
+                            <?php if (count($g_ad2) == 0) { ?>
+                                <tr>
+                                    <td colspan="6">등록된 회원이 없습니다.</td>
+                                </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </section>

@@ -6,8 +6,7 @@
 
 class Soft_model extends CI_Model
 {
-    function __construct()
-    {
+    function __construct () {
         parent::__construct();
     }
 
@@ -15,10 +14,9 @@ class Soft_model extends CI_Model
      * 리스트가져오기
      */
 
-    function get_progress_list()
-    {
-        
-        $sql = "SELECT * FROM soft_progress";
+    function get_soft_list ($state) {
+
+        $sql = "SELECT * FROM soft_all where state='".$state."'";
 
         $query = $this->db->query($sql);
 
@@ -32,11 +30,12 @@ class Soft_model extends CI_Model
      * @param $serial_num
      * @return mixed
      */
-    function get_window_use_cnt($serial_num){
+    function get_window_use_cnt ($serial_num) {
         $sql = "SELECT count(product_number) AS 'CNT' 
                 from g_window where product_number like 
                 '%${serial_num}%' ";
-        $res =  $this->db->query($sql)->row_array();
+        $res = $this->db->query($sql)->row_array();
+
         return $res['CNT'];
     }
 
@@ -45,11 +44,12 @@ class Soft_model extends CI_Model
      * @param $serial_num
      * @return mixed
      */
-    function get_ms_use_cnt($serial_num){
+    function get_ms_use_cnt ($serial_num) {
         $sql = "SELECT count(product_number) AS 'CNT' 
                 from g_ms where product_number like 
                 '%${serial_num}%' ";
-        $res =  $this->db->query($sql)->row_array();
+        $res = $this->db->query($sql)->row_array();
+
         return $res['CNT'];
     }
 
@@ -58,17 +58,18 @@ class Soft_model extends CI_Model
      * $param $serial_num
      * @return mixed
      */
-    function get_hangul_use_cnt($serial_num){
+    function get_hangul_use_cnt ($serial_num) {
         $sql = "SELECT count(product_number) AS 'CNT' 
                 from g_hangul where product_number like 
                 '%${serial_num}%' ";
-        $res =  $this->db->query($sql)->row_array();
+        $res = $this->db->query($sql)->row_array();
+
         return $res['CNT'];
 
     }
 
-    function get_etc_use_cnt($serial_num,$company){
-        switch($company){
+    function get_etc_use_cnt ($serial_num, $company) {
+        switch ($company) {
             case "윤디자인":
             case "아시아소프트":
             case "한양정보통신":
@@ -92,14 +93,13 @@ class Soft_model extends CI_Model
                         '%${serial_num}%' ";
                 break;
         }
-        $res =  $this->db->query($sql)->row_array();
+        $res = $this->db->query($sql)->row_array();
+
         return $res['CNT'];
     }
 
 
-
-    function get_progress_window_list()
-    {
+    function get_progress_window_list () {
 
         $sql = "SELECT * FROM soft_progress WHERE product_name LIKE  \"%window%\"";
 
@@ -110,8 +110,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_progress_ms_list()
-    {
+    function get_progress_ms_list () {
 
         $sql = "SELECT * FROM soft_progress WHERE product_name LIKE  \"%MS-Office%\"";
 
@@ -122,8 +121,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_progress_hangul_list()
-    {
+    function get_progress_hangul_list () {
 
         $sql = "SELECT * FROM soft_progress WHERE product_name LIKE  \"%한글%\"";
 
@@ -134,8 +132,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_progress_etc_list()
-    {
+    function get_progress_etc_list () {
 
         $sql = "SELECT * FROM soft_progress WHERE NOT product_name LIKE \"Window%\" AND NOT product_name LIKE \"MS%\" AND NOT product_name LIKE \"한글%\"";
 
@@ -146,8 +143,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_keep_list()
-    {
+    function get_keep_list () {
         $sql = "SELECT * FROM soft_keep";
 
         $query = $this->db->query($sql);
@@ -157,8 +153,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_stop_list()
-    {
+    function get_stop_list () {
         $sql = "SELECT * FROM soft_stop";
 
         $query = $this->db->query($sql);
@@ -168,8 +163,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_kaspersky_list()
-    {
+    function get_kaspersky_list () {
         $sql = "SELECT * FROM kaspersky";
 
         $query = $this->db->query($sql);
@@ -179,8 +173,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_printer_list()
-    {
+    function get_printer_list () {
         $sql = "SELECT * FROM printer";
 
         $query = $this->db->query($sql);
@@ -190,8 +183,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_software_list()
-    {
+    function get_software_list () {
         $sql = "SELECT * FROM software";
 
         $query = $this->db->query($sql);
@@ -201,8 +193,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_xpdown_list()
-    {
+    function get_xpdown_list () {
         $sql = "SELECT * FROM xp_down";
 
         $query = $this->db->query($sql);
@@ -212,8 +203,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_ms_up_list()
-    {
+    function get_ms_up_list () {
         $sql = "SELECT * FROM ms_up";
 
         $query = $this->db->query($sql);
@@ -223,8 +213,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_quark_up_list()
-    {
+    function get_quark_up_list () {
         $sql = "SELECT * FROM quark_up";
 
         $query = $this->db->query($sql);
@@ -234,8 +223,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_asiafont_up_list()
-    {
+    function get_asiafont_up_list () {
         $sql = "SELECT * FROM asiafont_up";
 
         $query = $this->db->query($sql);
@@ -245,8 +233,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_soft_account_list()
-    {
+    function get_soft_account_list () {
         $sql = "SELECT * FROM soft_account";
 
         $query = $this->db->query($sql);
@@ -260,64 +247,8 @@ class Soft_model extends CI_Model
      * 전산실
      */
 
-    function get_keep_pc()
-    {
-        $sql = "SELECT * FROM jeonsan_pc";
-        
-        $query = $this->db->query($sql);
-        
-        $result = $query->result();
-        
-        return $result;
-    }
-
-    function get_keep_moniter()
-    {
-        $sql = "SELECT * FROM jeonsan_moniter";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    function get_keep_keyboard()
-    {
-        $sql = "SELECT * FROM jeonsan_keyboard";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    function get_keep_mouse()
-    {
-        $sql = "SELECT * FROM jeonsan_mouse";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    function get_keep_headset()
-    {
-        $sql = "SELECT * FROM jeonsan_headset";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    function get_keep_cell()
-    {
-        $sql = "SELECT * FROM jeonsan_cell";
+    function get_keep ($type) {
+        $sql = "SELECT * FROM jeonsan where type='".$type."'";
 
         $query = $this->db->query($sql);
 
@@ -331,8 +262,7 @@ class Soft_model extends CI_Model
      * 각소프트웨어를 전체목록 보여주고 어떤사용자가 쓰고있는지 매칭해준다.
      */
 
-    function get_use_moniter_list()
-    {
+    function get_use_moniter_list () {
         $sql = "SELECT * FROM g_moniter LEFT JOIN g_gs ON g_moniter.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -341,9 +271,8 @@ class Soft_model extends CI_Model
 
         return $result;
     }
-    
-    function get_use_pc_list()
-    {
+
+    function get_use_pc_list () {
         $sql = "SELECT * FROM g_pc LEFT JOIN g_gs ON g_pc.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -353,8 +282,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_keyboard_list()
-    {
+    function get_use_keyboard_list () {
         $sql = "SELECT * FROM g_keyboard LEFT JOIN g_gs ON g_keyboard.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -364,8 +292,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_mouse_list()
-    {
+    function get_use_mouse_list () {
         $sql = "SELECT * FROM g_mouse LEFT JOIN g_gs ON g_mouse.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -375,8 +302,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_headset_list()
-    {
+    function get_use_headset_list () {
         $sql = "SELECT * FROM g_headset LEFT JOIN g_gs ON g_headset.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -386,8 +312,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_cell_list()
-    {
+    function get_use_cell_list () {
         $sql = "SELECT * FROM g_cell LEFT JOIN g_gs ON g_cell.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -397,8 +322,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_window_list()
-    {
+    function get_use_window_list () {
         $sql = "SELECT * FROM g_window LEFT JOIN g_gs ON g_window.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -408,8 +332,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_ms_list()
-    {
+    function get_use_ms_list () {
         $sql = "SELECT * FROM g_ms LEFT JOIN g_gs ON g_ms.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -419,8 +342,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_hangul_list()
-    {
+    function get_use_hangul_list () {
         $sql = "SELECT * FROM g_hangul LEFT JOIN g_gs ON g_hangul.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -430,8 +352,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_quark_list()
-    {
+    function get_use_quark_list () {
         $sql = "SELECT * FROM g_quark LEFT JOIN g_gs ON g_quark.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -441,8 +362,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_adobe_list()
-    {
+    function get_use_adobe_list () {
         $sql = "SELECT * FROM g_adobe LEFT JOIN g_gs ON g_adobe.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -452,8 +372,7 @@ class Soft_model extends CI_Model
         return $result;
     }
 
-    function get_use_font_list()
-    {
+    function get_use_font_list () {
         $sql = "SELECT * FROM g_font LEFT JOIN g_gs ON g_font.user_idx=g_gs.idx";
 
         $query = $this->db->query($sql);
@@ -467,31 +386,30 @@ class Soft_model extends CI_Model
      * soft_progress 등록
      */
 
-    function insert_soft_progress($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $use_num, $remarks)
-    {
+    function insert_soft_progress ($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $use_num, $remarks) {
         $sql = "INSERT INTO soft_progress (
         product_name, version, company, purpose, target, compatibility, serial_num, package, license_numb, keep_place, use_num, remarks
         ) 
         VALUES (
-        '" . $product_name . "'
-        , '" . $version . "'
-        , '" . $company . "'
-        , '" . $purpose . "'
-        , '" . $target . "'
-        , '" . $compatibility . "'
-        , '" . $serial_num . "'
-        , '" . $package . "'
-        , '" . $license_numb . "'
-        , '" . $keep_place . "'
-        , '" . $use_num . "'
-        , '" . $remarks . "'
+        '".$product_name."'
+        , '".$version."'
+        , '".$company."'
+        , '".$purpose."'
+        , '".$target."'
+        , '".$compatibility."'
+        , '".$serial_num."'
+        , '".$package."'
+        , '".$license_numb."'
+        , '".$keep_place."'
+        , '".$use_num."'
+        , '".$remarks."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_progress($idx) {
+    function get_view_progress ($idx) {
 
-        $sql = "SELECT * FROM soft_progress WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM soft_progress WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -504,8 +422,7 @@ class Soft_model extends CI_Model
     /*
      * soft_progress 데이터 수정
      */
-    function modify_soft_progress($params)
-    {
+    function modify_soft_progress ($params) {
 
         $sql = "
 			UPDATE  soft_progress  
@@ -514,9 +431,9 @@ class Soft_model extends CI_Model
 			  keep_place =?, use_num =?, remarks =?
 			WHERE idx =? ;
         ";
-        
+
         $result_query = $this->db->query($sql, array(
-           $params['product_name'],
+            $params['product_name'],
             $params['version'],
             $params['company'],
             $params['purpose'],
@@ -530,7 +447,7 @@ class Soft_model extends CI_Model
             $params['remarks'],
             $params['idx']
         ));
-        
+
         return $result_query;
 
     }
@@ -538,30 +455,29 @@ class Soft_model extends CI_Model
     /*
      * soft_keep 등록
      */
-    function insert_soft_keep($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $remarks)
-    {
+    function insert_soft_keep ($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $remarks) {
         $sql = "INSERT INTO soft_keep (
         product_name, version, company, purpose, target, compatibility, serial_num, package, license_numb, keep_place, remarks
         ) 
         VALUES (
-        '" . $product_name . "'
-        , '" . $version . "'
-        , '" . $company . "'
-        , '" . $purpose . "'
-        , '" . $target . "'
-        , '" . $compatibility . "'
-        , '" . $serial_num . "'
-        , '" . $package . "'
-        , '" . $license_numb . "'
-        , '" . $keep_place . "'
-        , '" . $remarks . "'
+        '".$product_name."'
+        , '".$version."'
+        , '".$company."'
+        , '".$purpose."'
+        , '".$target."'
+        , '".$compatibility."'
+        , '".$serial_num."'
+        , '".$package."'
+        , '".$license_numb."'
+        , '".$keep_place."'
+        , '".$remarks."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_keep($idx) {
+    function get_view_keep ($idx) {
 
-        $sql = "SELECT * FROM soft_keep WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM soft_keep WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -574,8 +490,7 @@ class Soft_model extends CI_Model
     /*
      * soft_keep 데이터 수정
      */
-    function modify_soft_keep($params)
-    {
+    function modify_soft_keep ($params) {
 
         $sql = "
 			UPDATE  soft_keep  
@@ -607,30 +522,29 @@ class Soft_model extends CI_Model
     /*
      * soft_stop 등록
      */
-    function insert_soft_stop($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $remarks)
-    {
+    function insert_soft_stop ($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $remarks) {
         $sql = "INSERT INTO soft_stop (
         product_name, version, company, purpose, target, compatibility, serial_num, package, license_numb, keep_place, remarks
         ) 
         VALUES (
-        '" . $product_name . "'
-        , '" . $version . "'
-        , '" . $company . "'
-        , '" . $purpose . "'
-        , '" . $target . "'
-        , '" . $compatibility . "'
-        , '" . $serial_num . "'
-        , '" . $package . "'
-        , '" . $license_numb . "'
-        , '" . $keep_place . "'
-        , '" . $remarks . "'
+        '".$product_name."'
+        , '".$version."'
+        , '".$company."'
+        , '".$purpose."'
+        , '".$target."'
+        , '".$compatibility."'
+        , '".$serial_num."'
+        , '".$package."'
+        , '".$license_numb."'
+        , '".$keep_place."'
+        , '".$remarks."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_stop($idx) {
+    function get_view_stop ($idx) {
 
-        $sql = "SELECT * FROM soft_stop WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM soft_stop WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -643,8 +557,7 @@ class Soft_model extends CI_Model
     /*
      * soft_keep 데이터 수정
      */
-    function modify_soft_stop($params)
-    {
+    function modify_soft_stop ($params) {
 
         $sql = "
 			UPDATE  soft_stop  
@@ -676,30 +589,29 @@ class Soft_model extends CI_Model
     /*
      * kaspersky 등록
      */
-    function insert_kaspersky($product_name, $version, $company, $purpose,  $compatibility, $duration, $serial_num, $package, $license_numb, $keep_place, $remarks)
-    {
+    function insert_kaspersky ($product_name, $version, $company, $purpose, $compatibility, $duration, $serial_num, $package, $license_numb, $keep_place, $remarks) {
         $sql = "INSERT INTO kaspersky (
         product_name, version, company, purpose, compatibility, duration, serial_num, package, license_numb, keep_place, remarks
         ) 
         VALUES (
-        '" . $product_name . "'
-        , '" . $version . "'
-        , '" . $company . "'
-        , '" . $purpose . "'
-        , '" . $compatibility . "'
-        , '" . $duration . "'
-        , '" . $serial_num . "'
-        , '" . $package . "'
-        , '" . $license_numb . "'
-        , '" . $keep_place . "'
-        , '" . $remarks . "'
+        '".$product_name."'
+        , '".$version."'
+        , '".$company."'
+        , '".$purpose."'
+        , '".$compatibility."'
+        , '".$duration."'
+        , '".$serial_num."'
+        , '".$package."'
+        , '".$license_numb."'
+        , '".$keep_place."'
+        , '".$remarks."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_kaspersky($idx) {
+    function get_view_kaspersky ($idx) {
 
-        $sql = "SELECT * FROM kaspersky WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM kaspersky WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -712,8 +624,7 @@ class Soft_model extends CI_Model
     /*
      * kaspersky 데이터 수정
      */
-    function modify_kaspersky($params)
-    {
+    function modify_kaspersky ($params) {
 
         $sql = "
 			UPDATE  kaspersky  
@@ -745,27 +656,26 @@ class Soft_model extends CI_Model
     /*
      * printer 등록
      */
-    function insert_printer($product_name, $use_place, $term, $cost,  $color_a4, $color_a3, $black_a4, $black_a3)
-    {
+    function insert_printer ($product_name, $use_place, $term, $cost, $color_a4, $color_a3, $black_a4, $black_a3) {
         $sql = "INSERT INTO printer (
         product_name, use_palce, term, cost, color_a4, color_a3, black_a4, black_a3
         ) 
         VALUES (
-        '" . $product_name . "'
-        , '" . $use_place . "'
-        , '" . $term . "'
-        , '" . $cost . "'
-        , '" . $color_a4 . "'
-        , '" . $color_a3 . "'
-        , '" . $black_a4 . "'
-        , '" . $black_a3 . "'
+        '".$product_name."'
+        , '".$use_place."'
+        , '".$term."'
+        , '".$cost."'
+        , '".$color_a4."'
+        , '".$color_a3."'
+        , '".$black_a4."'
+        , '".$black_a3."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_printer($idx) {
+    function get_view_printer ($idx) {
 
-        $sql = "SELECT * FROM printer WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM printer WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -778,8 +688,7 @@ class Soft_model extends CI_Model
     /*
      * printer 데이터 수정
      */
-    function modify_printer($params)
-    {
+    function modify_printer ($params) {
 
         $sql = "
 			UPDATE  printer  
@@ -807,20 +716,19 @@ class Soft_model extends CI_Model
     /*
      * xp_down 등록
      */
-    function insert_xp_down($window7)
-    {
+    function insert_xp_down ($window7) {
         $sql = "INSERT INTO xp_down (
         window7
         ) 
         VALUES (
-        '" . $window7 . "'
+        '".$window7."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_xp_down($idx) {
+    function get_view_xp_down ($idx) {
 
-        $sql = "SELECT * FROM xp_down WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM xp_down WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -833,8 +741,7 @@ class Soft_model extends CI_Model
     /*
      * xp_down 데이터 수정
      */
-    function modify_xp_down($params)
-    {
+    function modify_xp_down ($params) {
 
         $sql = "
 			UPDATE  xp_down  
@@ -854,21 +761,20 @@ class Soft_model extends CI_Model
     /*
      * ms_up 등록
      */
-    function insert_ms_up($office2003_pro,$office2007_pro)
-    {
+    function insert_ms_up ($office2003_pro, $office2007_pro) {
         $sql = "INSERT INTO ms_up (
         office2003_pro, office2007_pro
         ) 
         VALUES (
-        '" . $office2003_pro . "',
-        '" . $office2007_pro . "'
+        '".$office2003_pro."',
+        '".$office2007_pro."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_ms_up($idx) {
+    function get_view_ms_up ($idx) {
 
-        $sql = "SELECT * FROM ms_up WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM ms_up WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -881,8 +787,7 @@ class Soft_model extends CI_Model
     /*
      * ms_up 데이터 수정
      */
-    function modify_ms_up($params)
-    {
+    function modify_ms_up ($params) {
 
         $sql = "
 			UPDATE  ms_up  
@@ -903,27 +808,26 @@ class Soft_model extends CI_Model
     /*
      * quark_up 등록
      */
-    function insert_quark_up($quark3,$quark4,$quark8,$quark9,$quark2015,$quark2015_serial,$sejong_font,$user)
-    {
+    function insert_quark_up ($quark3, $quark4, $quark8, $quark9, $quark2015, $quark2015_serial, $sejong_font, $user) {
         $sql = "INSERT INTO quark_up (
         quark3, quark4, quark8, quark9, quark2015, quark2015_serial, sejong_font,user
         ) 
         VALUES (
-        '" . $quark3 . "',
-        '" . $quark4 . "',
-        '" . $quark8 . "',
-        '" . $quark9 . "',
-        '" . $quark2015 . "',
-        '" . $quark2015_serial . "',
-        '" . $sejong_font . "',
-        '" . $user . "'
+        '".$quark3."',
+        '".$quark4."',
+        '".$quark8."',
+        '".$quark9."',
+        '".$quark2015."',
+        '".$quark2015_serial."',
+        '".$sejong_font."',
+        '".$user."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_quark_up($idx) {
+    function get_view_quark_up ($idx) {
 
-        $sql = "SELECT * FROM quark_up WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM quark_up WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -936,8 +840,7 @@ class Soft_model extends CI_Model
     /*
      * quark_up 데이터 수정
      */
-    function modify_quark_up($params)
-    {
+    function modify_quark_up ($params) {
 
         $sql = "
 			UPDATE  quark_up  
@@ -964,21 +867,20 @@ class Soft_model extends CI_Model
     /*
      * asiafont_up 등록
      */
-    function insert_asiafont_up($asiafont2008,$integrated_Package)
-    {
+    function insert_asiafont_up ($asiafont2008, $integrated_Package) {
         $sql = "INSERT INTO asiafont_up (
         asiafont2008, integrated_Package
         ) 
         VALUES (
-        '" . $asiafont2008 . "',
-        '" . $integrated_Package . "'
+        '".$asiafont2008."',
+        '".$integrated_Package."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function get_view_asiafont_up($idx) {
+    function get_view_asiafont_up ($idx) {
 
-        $sql = "SELECT * FROM asiafont_up WHERE idx='" . $idx . "'";
+        $sql = "SELECT * FROM asiafont_up WHERE idx='".$idx."'";
 
         $query = $this->db->query($sql);
 
@@ -991,8 +893,7 @@ class Soft_model extends CI_Model
     /*
      * asiafont_up 데이터 수정
      */
-    function modify_asiafont_up($params)
-    {
+    function modify_asiafont_up ($params) {
 
         $sql = "
 			UPDATE  asiafont_up
@@ -1013,80 +914,72 @@ class Soft_model extends CI_Model
     /*
      * 소프트웨어 데이터 삭제
      */
-    function delete_soft_progress($idx)
-    {
-        $sql = "DELETE FROM soft_progress WHERE idx = '" . $idx . "'";
-
-        $result = $this->db->query($sql);
-
-        return $result;
-    }
-    function delete_soft_keep($idx)
-    {
-        $sql = "DELETE FROM soft_keep WHERE idx = '" . $idx . "'";
+    function delete_soft_progress ($idx) {
+        $sql = "DELETE FROM soft_progress WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_soft_stop($idx)
-    {
-        $sql = "DELETE FROM soft_stop WHERE idx = '" . $idx . "'";
+    function delete_soft_keep ($idx) {
+        $sql = "DELETE FROM soft_keep WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_kaspersky($idx)
-    {
-        $sql = "DELETE FROM kaspersky WHERE idx = '" . $idx . "'";
+    function delete_soft_stop ($idx) {
+        $sql = "DELETE FROM soft_stop WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_printer($idx)
-    {
-        $sql = "DELETE FROM printer WHERE idx = '" . $idx . "'";
+    function delete_kaspersky ($idx) {
+        $sql = "DELETE FROM kaspersky WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_xp_down($idx)
-    {
-        $sql = "DELETE FROM xp_down WHERE idx = '" . $idx . "'";
+    function delete_printer ($idx) {
+        $sql = "DELETE FROM printer WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_ms_up($idx)
-    {
-        $sql = "DELETE FROM ms_up WHERE idx = '" . $idx . "'";
+    function delete_xp_down ($idx) {
+        $sql = "DELETE FROM xp_down WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_quark_up($idx)
-    {
-        $sql = "DELETE FROM quark_up WHERE idx = '" . $idx . "'";
+    function delete_ms_up ($idx) {
+        $sql = "DELETE FROM ms_up WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_asiafont_up($idx)
-    {
-        $sql = "DELETE FROM asiafont_up WHERE idx = '" . $idx . "'";
+    function delete_quark_up ($idx) {
+        $sql = "DELETE FROM quark_up WHERE idx = '".$idx."'";
+
+        $result = $this->db->query($sql);
+
+        return $result;
+    }
+
+    function delete_asiafont_up ($idx) {
+        $sql = "DELETE FROM asiafont_up WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 

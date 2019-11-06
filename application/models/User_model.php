@@ -5,8 +5,7 @@
  */
 class User_model extends CI_Model
 {
-    function  __construct()
-    {
+    function __construct () {
         parent::__construct();
     }
 
@@ -16,85 +15,23 @@ class User_model extends CI_Model
      * @param array $auth 폼 전송받은 아이디, 비밀번호
      * @return array
      */
-    function login($auth) {
-        $sql = "SELECT username,user_level FROM users WHERE username = '" . $auth['username'] . "' AND password = '" . $auth['password'] . "' ";
+    function login ($auth) {
+        $sql = "SELECT username,user_level FROM users WHERE username = '".$auth['username']."' AND password = '".$auth['password']."' ";
 
-        $query = $this -> db -> query($sql);
+        $query = $this->db->query($sql);
 
-        if ($query -> num_rows() > 0) {
-            return $query -> row();
+        if ($query->num_rows() > 0) {
+            return $query->row();
         } else {
             return FALSE;
         }
     }
 
     /*
-     * 경영지원본부 그룹원 불러오기
+     * 그룹원 정보 불러오기
      */
-    function get_g_gs()
-    {
-
-        $sql = "SELECT * FROM g_gs where group_key ='gs'";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    /*
-     * 광고1부 그룹원 불러오기
-     */
-    function get_g_ad1()
-    {
-
-        $sql = "SELECT * FROM g_gs where group_key ='ad1'";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    /*
-     * 광고2부 그룹원 불러오기
-     */
-    function get_g_ad2()
-    {
-
-        $sql = "SELECT * FROM g_gs where group_key ='ad2'";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    /*
-     * 리크루트 그룹원 불러오기
-     */
-    function get_g_em_edit()
-    {
-
-        $sql = "SELECT * FROM g_gs where group_key ='em_edit'";
-
-        $query = $this->db->query($sql);
-
-        $result = $query->result();
-
-        return $result;
-    }
-
-    /*
-     * 여행사업팀 그룹원 불러오기
-     */
-    function get_g_tv()
-    {
-
-        $sql = "SELECT * FROM g_gs where group_key ='tv'";
+    function get_g ($group) {
+        $sql = "SELECT * FROM g_gs where group_key ='".$group."'";
 
         $query = $this->db->query($sql);
 
@@ -106,8 +43,7 @@ class User_model extends CI_Model
     /*
      * 기타 그룹원 불러오기
      */
-    function get_g_etc()
-    {
+    function get_g_etc () {
 
         $sql = "SELECT * FROM g_gs where group_key ='etc'";
 
@@ -117,52 +53,42 @@ class User_model extends CI_Model
 
         return $result;
     }
-    
+
 
     /*
      * 그룹원 등록
      * g_gs가 전체 그룹원 테이블임.
      */
-
-    function insert_gs_user($user_name, $user_email, $user_group, $user_grade, $user_number, $group_key)
-    {
+    function insert_gs_user ($user_name, $user_email, $user_group, $user_grade, $user_number, $group_key) {
         $sql = "INSERT INTO g_gs (
         user_name, user_email, user_group, user_grade, user_number, group_key
         ) 
         VALUES (
-        '" . $user_name . "'
-        , '" . $user_email . "'
-        , '" . $user_group . "'
-        , '" . $user_grade . "'
-        , '" . $user_number . "'
-        , '" . $group_key . "'
+        '".$user_name."'
+        , '".$user_email."'
+        , '".$user_group."'
+        , '".$user_grade."'
+        , '".$user_number."'
+        , '".$group_key."'
         )";
-        $query = $this->db->query($sql);
-
-        // 그룹원 개인별로 전산기록부 user_idx 값을 받는다. 값은 g_gs insert하면서 최대 idx값으로 한다.
-        // 공통된값을 넣으므로써 전산기록부에서 데이터를 가져올때 user_idx로 불러오면 각 그룹원의 개인 전산기록을 가져올수있다.
-
-        // 전산항목추가기능으로 항목추가시에 user_idx를 가져와서 설정하도록 변경해서 그룹원등록시 전산항목이 자동생성되도록하는 쿼리문은 제거했다.
-        // 쿼리문을 방치하니 null값으로 남아있는 필드값이있어서 지우는게 맞다.
-
+        $this->db->query($sql);
     }
+
     /*
      * 그룹원 수정 - view
      */
-    public function view_gs_user($idx)
-    {
+    public function view_gs_user ($idx) {
         $sql = "SELECT * FROM g_gs WHERE idx=$idx";
         $query = $this->db->query($sql);
         $result = $query->row();
-        return $result;
 
+        return $result;
     }
 
     /*
      * 그룹원 수정 - update
      */
-    function edit_gs_user($params)
-    {
+    function edit_gs_user ($params) {
 
         $sql = "
 			UPDATE  g_gs  
@@ -187,9 +113,7 @@ class User_model extends CI_Model
     /*
      * 그룹원 삭제
      */
-
-    public function delete_gs_user($table, $idx)
-    {
+    public function delete_gs_user ($table, $idx) {
         $delete_array = array(
             'idx' => $idx
         );

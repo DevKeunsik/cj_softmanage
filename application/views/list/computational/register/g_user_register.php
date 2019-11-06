@@ -84,12 +84,6 @@
                                                     여행사업팀
                                                 </label>
                                             </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="group_key" id="group_etc" value="etc">
-                                                    기타
-                                                </label>
-                                            </div>
                                         </div>
                                         </div>
                                     <div class="form-actions">

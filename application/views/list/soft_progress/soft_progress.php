@@ -6,7 +6,7 @@
             <div class="col-lg-12">
                 <h3 class="page-header"><i class="fa fa-laptop"></i> 소프트웨어(진행)</h3>
                 <?php
-                if ( $this -> session -> userdata('user_level') == '1') {
+                if ($this->session->userdata('user_level') == '1') {
                     ?>
                     <a class="btn btn-success btn-sm" href="/soft/write_progress/">신규 등록</a>
                     <?php
@@ -50,7 +50,7 @@
                             <th>비고</th>
                         </tr>
                         <?php
-                        foreach ($progress_list as $lt) {
+                        foreach ($lists as $lt) {
                             ?>
                             <tr>
                                 <td>

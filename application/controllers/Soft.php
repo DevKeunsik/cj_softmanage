@@ -4,8 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Soft extends CI_Controller
 {
 
-    function __construct()
-    {
+    function __construct () {
         parent::__construct();
         $this->allow = array();
         $this->load->database();
@@ -16,8 +15,7 @@ class Soft extends CI_Controller
     /*
      *헤더 푸터 불러오기
      */
-    public function _remap($method)
-    {
+    public function _remap ($method) {
         // 헤더 include
         $this->load->view('header');
 
@@ -32,65 +30,81 @@ class Soft extends CI_Controller
     /*
      * softmanage 목록
      */
-    public function progress_list()
-    {
-        $progress_list = $this->soft_model->get_progress_list();
-        $new_progress_list = array();
-        foreach($progress_list as $item){
+    public function lists () {
+        $state = $_GET['state'];
+        $get_list = $this->soft_model->get_soft_list($state);
+
+        $new_list = array();
+        foreach ($get_list as $item) {
             $serial_num = $item['serial_num'];
             $p_code = substr($item['product_name'], 0, 1);
-            switch($p_code) {
+            switch ($p_code) {
                 case 'W':
                     $item['use_cnt'] = $this->soft_model->get_window_use_cnt($serial_num);
                     break;
                 case 'M':
                     $item['use_cnt'] = $this->soft_model->get_ms_use_cnt($serial_num);
                     break;
-                default: $item['use_cnt'] = '';
+                default:
+                    $item['use_cnt'] = '';
             }
-            array_push($new_progress_list, $item);
+            array_push($new_list, $item);
         }
         $data = array(
-            "progress_list" => $new_progress_list
+            "lists" => $new_list
         );
 
-        $this->load->view('list/soft_progress/soft_progress', $data);
+        switch ($state) {
+            case "Y":
+                $this->load->view('list/soft_progress/soft_progress', $data);
+                break;
+            case "N":
+                $this->load->view('list/soft_stop/soft_stop', $data);
+                break;
+            case "R":
+                $this->load->view('list/soft_keep/soft_keep', $data);
+                break;
+            default:
+                $this->load->view('list/soft_progress/soft_progress', $data);
+                break;
+        }
+
     }
 
-    public function progress_list_window()
-    {
+    public function progress_list_window () {
         $progress_list = $this->soft_model->get_progress_window_list();
         $new_progress_list = array();
-        foreach($progress_list as $item){
+        foreach ($progress_list as $item) {
             $serial_num = $item['serial_num'];
             $p_code = substr($item['product_name'], 0, 1);
-            switch($p_code) {
+            switch ($p_code) {
                 case 'W':
                     $item['use_cnt'] = $this->soft_model->get_window_use_cnt($serial_num);
                     break;
-                default: $item['use_cnt'] = '';
+                default:
+                    $item['use_cnt'] = '';
             }
             array_push($new_progress_list, $item);
         }
         $data = array(
             "progress_list" => $new_progress_list
         );
-        
+
         $this->load->view('list/soft_progress/soft_progress', $data);
     }
 
-    public function progress_list_ms()
-    {
+    public function progress_list_ms () {
         $progress_list = $this->soft_model->get_progress_ms_list();
         $new_progress_list = array();
-        foreach($progress_list as $item){
+        foreach ($progress_list as $item) {
             $serial_num = $item['serial_num'];
             $p_code = substr($item['product_name'], 0, 1);
-            switch($p_code) {
+            switch ($p_code) {
                 case 'M':
                     $item['use_cnt'] = $this->soft_model->get_ms_use_cnt($serial_num);
                     break;
-                default: $item['use_cnt'] = '';
+                default:
+                    $item['use_cnt'] = '';
             }
             array_push($new_progress_list, $item);
         }
@@ -101,19 +115,19 @@ class Soft extends CI_Controller
         $this->load->view('list/soft_progress/soft_progress', $data);
     }
 
-    public function progress_list_hangul()
-    {
+    public function progress_list_hangul () {
         $progress_list = $this->soft_model->get_progress_hangul_list();
         $new_progress_list = array();
-        foreach($progress_list as $item){
+        foreach ($progress_list as $item) {
             $serial_num = $item['serial_num'];
             // 한글은 첫글자 3 영어는 1
             $p_code = substr($item['product_name'], 0, 3);
-            switch($p_code) {
+            switch ($p_code) {
                 case '한':
                     $item['use_cnt'] = $this->soft_model->get_hangul_use_cnt($serial_num);
                     break;
-                default: $item['use_cnt'] = '';
+                default:
+                    $item['use_cnt'] = '';
             }
             array_push($new_progress_list, $item);
         }
@@ -124,21 +138,18 @@ class Soft extends CI_Controller
         $this->load->view('list/soft_progress/soft_progress', $data);
     }
 
-    public function progress_list_etc()
-    {
+    public function progress_list_etc () {
         $progress_list = $this->soft_model->get_progress_etc_list();
         $new_progress_list = array();
-        foreach($progress_list as $item){
+        foreach ($progress_list as $item) {
             $serial_num = $item['serial_num'];
             $company = $item['company'];
             // 한글은 첫글자 3 영어는 1
             $p_code = substr($item['product_name'], 0, 1);
-            if($p_code != 'W' && $p_code != 'M')
-            {
+            if ($p_code != 'W' && $p_code != 'M') {
                 $p_code2 = substr($item['product_name'], 0, 3);
-                if($p_code2 != '한')
-                {
-                    $item['use_cnt'] = $this->soft_model->get_etc_use_cnt($serial_num,$company);
+                if ($p_code2 != '한') {
+                    $item['use_cnt'] = $this->soft_model->get_etc_use_cnt($serial_num, $company);
                 }
             }
             array_push($new_progress_list, $item);
@@ -150,179 +161,20 @@ class Soft extends CI_Controller
         $this->load->view('list/soft_progress/soft_progress', $data);
     }
 
-    public function keep_list()
-    {
-        $data['keep_list'] = $this->soft_model->get_keep_list();
-        $this->load->view('list/soft_keep/soft_keep', $data);
-    }
-
-    public function stop_list()
-    {
-        $data['stop_list'] = $this->soft_model->get_stop_list();
-        $this->load->view('list/soft_stop/soft_stop', $data);
-    }
-
-    public function kaspersky()
-    {
+    public function kaspersky () {
         $data['kaspersky'] = $this->soft_model->get_kaspersky_list();
         $this->load->view('list/kaspersky/kaspersky', $data);
     }
 
-    public function printer()
-    {
+    public function printer () {
         $data['printer'] = $this->soft_model->get_printer_list();
         $this->load->view('list/printer/printer', $data);
-    }
-
-    public function software()
-    {
-        $data['software'] = $this->soft_model->get_software_list();
-        $this->load->view('list/software/software', $data);
-    }
-
-    public function xp_down()
-    {
-        $data['xp_down'] = $this->soft_model->get_xpdown_list();
-        $this->load->view('list/xp/xp_down', $data);
-    }
-
-    public function ms_up()
-    {
-        $data['ms_up'] = $this->soft_model->get_ms_up_list();
-        $this->load->view('list/ms/ms_up', $data);
-    }
-
-    public function quark_up()
-    {
-        $data['quark_up'] = $this->soft_model->get_quark_up_list();
-        $this->load->view('list/quark/quark_up', $data);
-    }
-
-    public function asiafont_up()
-    {
-        $data['asiafont_up'] = $this->soft_model->get_asiafont_up_list();
-        $this->load->view('list/asiafont/asiafont_up', $data);
-    }
-
-    public function use_moniter()
-    {
-        $data['use_moniter'] = $this->soft_model->get_use_moniter_list();
-        $this->load->view('list/computational/using_soft/use_moniter', $data);
-    }
-
-    public function use_pc()
-    {
-        $data['use_pc'] = $this->soft_model->get_use_pc_list();
-        $this->load->view('list/computational/using_soft/use_pc', $data);
-    }
-
-    public function use_keyboard()
-    {
-        $data['use_keyboard'] = $this->soft_model->get_use_keyboard_list();
-        $this->load->view('list/computational/using_soft/use_keyboard', $data);
-    }
-
-    public function use_mouse()
-    {
-        $data['use_mouse'] = $this->soft_model->get_use_mouse_list();
-        $this->load->view('list/computational/using_soft/use_mouse', $data);
-    }
-
-    public function use_headset()
-    {
-        $data['use_headset'] = $this->soft_model->get_use_headset_list();
-        $this->load->view('list/computational/using_soft/use_headset', $data);
-    }
-
-    public function use_cell()
-    {
-        $data['use_cell'] = $this->soft_model->get_use_cell_list();
-        $this->load->view('list/computational/using_soft/use_cell', $data);
-    }
-
-    public function use_window()
-    {
-        $data['use_window'] = $this->soft_model->get_use_window_list();
-        $this->load->view('list/computational/using_soft/use_window', $data);
-    }
-
-    public function use_ms()
-    {
-        $data['use_ms'] = $this->soft_model->get_use_ms_list();
-        $this->load->view('list/computational/using_soft/use_ms', $data);
-    }
-
-    public function use_hangul()
-    {
-        $data['use_hangul'] = $this->soft_model->get_use_hangul_list();
-        $this->load->view('list/computational/using_soft/use_hangul', $data);
-    }
-
-    public function use_quark()
-    {
-        $data['use_quark'] = $this->soft_model->get_use_quark_list();
-        $this->load->view('list/computational/using_soft/use_quark', $data);
-    }
-
-    public function use_adobe()
-    {
-        $data['use_adobe'] = $this->soft_model->get_use_adobe_list();
-        $this->load->view('list/computational/using_soft/use_adobe', $data);
-    }
-
-    public function use_font()
-    {
-        $data['use_font'] = $this->soft_model->get_use_font_list();
-        $this->load->view('list/computational/using_soft/use_font', $data);
-    }
-
-
-    /*
-     * 전산실 목록불러오기
-     * PC,모니터,키보드,마우스
-     */
-
-    public function keep_pc()
-    {
-        $data['keep_pc'] = $this->soft_model->get_keep_pc();
-        $this->load->view('list/jeonsan/j_item_pc', $data);
-    }
-
-    public function keep_moniter()
-    {
-        $data['keep_moniter'] = $this->soft_model->get_keep_moniter();
-        $this->load->view('list/jeonsan/j_item_moniter', $data);
-    }
-
-    public function keep_keyboard()
-    {
-        $data['keep_keyboard'] = $this->soft_model->get_keep_keyboard();
-        $this->load->view('list/jeonsan/j_item_keyboard', $data);
-    }
-
-    public function keep_mouse()
-    {
-        $data['keep_mouse'] = $this->soft_model->get_keep_mouse();
-        $this->load->view('list/jeonsan/j_item_mouse', $data);
-    }
-
-    public function keep_headset()
-    {
-        $data['keep_headset'] = $this->soft_model->get_keep_headset();
-        $this->load->view('list/jeonsan/j_item_headset', $data);
-    }
-
-    public function keep_cell()
-    {
-        $data['keep_cell'] = $this->soft_model->get_keep_cell();
-        $this->load->view('list/jeonsan/j_item_cell', $data);
     }
 
     /*
      *  soft_progress 등록
      */
-    public function write_progress()
-    {
+    public function write_progress () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -341,10 +193,7 @@ class Soft extends CI_Controller
             $use_num = $this->input->post('use_num', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
 
-            $this->soft_model->insert_soft_progress(
-                $product_name, $version, $company, $purpose, $target, $compatibility, $serial_num,
-                $package, $license_numb, $keep_place, $use_num, $remarks
-            );
+            $this->soft_model->insert_soft_progress($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $use_num, $remarks);
 
             alert('게시물 등록 완료', '../progress_list/');
 
@@ -358,8 +207,7 @@ class Soft extends CI_Controller
     /**
      * soft_progress 데이터 수정
      */
-    function view_progress()
-    {
+    function view_progress () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -388,19 +236,19 @@ class Soft extends CI_Controller
             $remarks = trim($this->input->post("remarks"));
 
             $params = array(
-                "product_name" => $product_name,
-                "version" => $version,
-                "company" => $company,
-                "purpose" => $purpose,
-                "target" => $target,
+                "product_name"  => $product_name,
+                "version"       => $version,
+                "company"       => $company,
+                "purpose"       => $purpose,
+                "target"        => $target,
                 "compatibility" => $compatibility,
-                "serial_num" => $serial_num,
-                "package" => $package,
-                "license_numb" => $license_numb,
-                "keep_place" => $keep_place,
-                "use_num" => $use_num,
-                "remarks" => $remarks,
-                "idx" => $idx
+                "serial_num"    => $serial_num,
+                "package"       => $package,
+                "license_numb"  => $license_numb,
+                "keep_place"    => $keep_place,
+                "use_num"       => $use_num,
+                "remarks"       => $remarks,
+                "idx"           => $idx
             );
 
             $this->soft_model->modify_soft_progress($params);
@@ -414,8 +262,7 @@ class Soft extends CI_Controller
     /*
      * soft_progress 데이터 삭제
      */
-    public function soft_progress_delete()
-    {
+    public function soft_progress_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -433,8 +280,7 @@ class Soft extends CI_Controller
     /*
      *  soft_keep 등록
      */
-    public function write_keep()
-    {
+    public function write_keep () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -452,10 +298,7 @@ class Soft extends CI_Controller
             $keep_place = $this->input->post('keep_place', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
 
-            $this->soft_model->insert_soft_keep(
-                $product_name, $version, $company, $purpose, $target, $compatibility, $serial_num,
-                $package, $license_numb, $keep_place, $remarks
-            );
+            $this->soft_model->insert_soft_keep($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $remarks);
 
             alert('게시물 등록 완료', '../keep_list/');
 
@@ -469,8 +312,7 @@ class Soft extends CI_Controller
     /**
      * soft_keep 데이터 수정
      */
-    function view_keep()
-    {
+    function view_keep () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -497,18 +339,18 @@ class Soft extends CI_Controller
             $remarks = trim($this->input->post("remarks"));
 
             $params = array(
-                "product_name" => $product_name,
-                "version" => $version,
-                "company" => $company,
-                "purpose" => $purpose,
-                "target" => $target,
+                "product_name"  => $product_name,
+                "version"       => $version,
+                "company"       => $company,
+                "purpose"       => $purpose,
+                "target"        => $target,
                 "compatibility" => $compatibility,
-                "serial_num" => $serial_num,
-                "package" => $package,
-                "license_numb" => $license_numb,
-                "keep_place" => $keep_place,
-                "remarks" => $remarks,
-                "idx" => $idx
+                "serial_num"    => $serial_num,
+                "package"       => $package,
+                "license_numb"  => $license_numb,
+                "keep_place"    => $keep_place,
+                "remarks"       => $remarks,
+                "idx"           => $idx
             );
 
             $this->soft_model->modify_soft_keep($params);
@@ -522,8 +364,7 @@ class Soft extends CI_Controller
     /*
      * soft_keep 데이터 삭제
      */
-    public function soft_keep_delete()
-    {
+    public function soft_keep_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -541,8 +382,7 @@ class Soft extends CI_Controller
     /*
      *  soft_stop 등록
      */
-    public function write_stop()
-    {
+    public function write_stop () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -560,10 +400,7 @@ class Soft extends CI_Controller
             $keep_place = $this->input->post('keep_place', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
 
-            $this->soft_model->insert_soft_stop(
-                $product_name, $version, $company, $purpose, $target, $compatibility, $serial_num,
-                $package, $license_numb, $keep_place, $remarks
-            );
+            $this->soft_model->insert_soft_stop($product_name, $version, $company, $purpose, $target, $compatibility, $serial_num, $package, $license_numb, $keep_place, $remarks);
 
             alert('게시물 등록 완료', '../stop_list/');
 
@@ -577,8 +414,7 @@ class Soft extends CI_Controller
     /**
      * soft_stop 데이터 수정
      */
-    function view_stop()
-    {
+    function view_stop () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -605,18 +441,18 @@ class Soft extends CI_Controller
             $remarks = trim($this->input->post("remarks"));
 
             $params = array(
-                "product_name" => $product_name,
-                "version" => $version,
-                "company" => $company,
-                "purpose" => $purpose,
-                "target" => $target,
+                "product_name"  => $product_name,
+                "version"       => $version,
+                "company"       => $company,
+                "purpose"       => $purpose,
+                "target"        => $target,
                 "compatibility" => $compatibility,
-                "serial_num" => $serial_num,
-                "package" => $package,
-                "license_numb" => $license_numb,
-                "keep_place" => $keep_place,
-                "remarks" => $remarks,
-                "idx" => $idx
+                "serial_num"    => $serial_num,
+                "package"       => $package,
+                "license_numb"  => $license_numb,
+                "keep_place"    => $keep_place,
+                "remarks"       => $remarks,
+                "idx"           => $idx
             );
 
             $this->soft_model->modify_soft_stop($params);
@@ -630,8 +466,7 @@ class Soft extends CI_Controller
     /*
      * soft_stop 데이터 삭제
      */
-    public function soft_stop_delete()
-    {
+    public function soft_stop_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -649,8 +484,7 @@ class Soft extends CI_Controller
     /*
      *  kaspersky 등록
      */
-    public function write_kaspersky()
-    {
+    public function write_kaspersky () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -668,10 +502,7 @@ class Soft extends CI_Controller
             $keep_place = $this->input->post('keep_place', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
 
-            $this->soft_model->insert_kaspersky(
-                $product_name, $version, $company, $purpose, $compatibility, $duration, $serial_num,
-                $package, $license_numb, $keep_place, $remarks
-            );
+            $this->soft_model->insert_kaspersky($product_name, $version, $company, $purpose, $compatibility, $duration, $serial_num, $package, $license_numb, $keep_place, $remarks);
 
             alert('게시물 등록 완료', '../kaspersky/');
 
@@ -685,8 +516,7 @@ class Soft extends CI_Controller
     /**
      * kaspersky 데이터 수정
      */
-    function view_kaspersky()
-    {
+    function view_kaspersky () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -713,18 +543,18 @@ class Soft extends CI_Controller
             $remarks = trim($this->input->post("remarks"));
 
             $params = array(
-                "product_name" => $product_name,
-                "version" => $version,
-                "company" => $company,
-                "purpose" => $purpose,
+                "product_name"  => $product_name,
+                "version"       => $version,
+                "company"       => $company,
+                "purpose"       => $purpose,
                 "compatibility" => $compatibility,
-                "duration" => $duration,
-                "serial_num" => $serial_num,
-                "package" => $package,
-                "license_numb" => $license_numb,
-                "keep_place" => $keep_place,
-                "remarks" => $remarks,
-                "idx" => $idx
+                "duration"      => $duration,
+                "serial_num"    => $serial_num,
+                "package"       => $package,
+                "license_numb"  => $license_numb,
+                "keep_place"    => $keep_place,
+                "remarks"       => $remarks,
+                "idx"           => $idx
             );
 
             $this->soft_model->modify_kaspersky($params);
@@ -738,8 +568,7 @@ class Soft extends CI_Controller
     /*
      * kaspersky 데이터 삭제
      */
-    public function kaspersky_delete()
-    {
+    public function kaspersky_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -757,8 +586,7 @@ class Soft extends CI_Controller
     /*
      *  printer 등록
      */
-    public function write_printer()
-    {
+    public function write_printer () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -773,9 +601,7 @@ class Soft extends CI_Controller
             $black_a4 = $this->input->post('black_a4', TRUE);
             $black_a3 = $this->input->post('black_a3', TRUE);
 
-            $this->soft_model->insert_printer(
-                $product_name, $use_place, $term, $cost, $color_a4, $color_a3, $black_a4, $black_a3
-            );
+            $this->soft_model->insert_printer($product_name, $use_place, $term, $cost, $color_a4, $color_a3, $black_a4, $black_a3);
 
             alert('게시물 등록 완료', '../printer/');
 
@@ -789,8 +615,7 @@ class Soft extends CI_Controller
     /**
      * printer 데이터 수정
      */
-    function view_printer()
-    {
+    function view_printer () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -815,14 +640,14 @@ class Soft extends CI_Controller
 
             $params = array(
                 "product_name" => $product_name,
-                "use_place" => $use_place,
-                "term" => $term,
-                "cost" => $cost,
-                "color_a4" => $color_a4,
-                "color_a3" => $color_a3,
-                "black_a4" => $black_a4,
-                "black_a3" => $black_a3,
-                "idx" => $idx
+                "use_place"    => $use_place,
+                "term"         => $term,
+                "cost"         => $cost,
+                "color_a4"     => $color_a4,
+                "color_a3"     => $color_a3,
+                "black_a4"     => $black_a4,
+                "black_a3"     => $black_a3,
+                "idx"          => $idx
             );
 
             $this->soft_model->modify_printer($params);
@@ -836,8 +661,7 @@ class Soft extends CI_Controller
     /*
      * printer 데이터 삭제
      */
-    public function printer_delete()
-    {
+    public function printer_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -855,8 +679,7 @@ class Soft extends CI_Controller
     /*
      *  xp_down 등록
      */
-    public function write_xp_down()
-    {
+    public function write_xp_down () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -864,9 +687,7 @@ class Soft extends CI_Controller
 
             $window7 = $this->input->post('window7', TRUE);
 
-            $this->soft_model->insert_xp_down(
-                $window7
-            );
+            $this->soft_model->insert_xp_down($window7);
 
             alert('게시물 등록 완료', '../xp_down/');
 
@@ -880,8 +701,7 @@ class Soft extends CI_Controller
     /**
      * xp_down 데이터 수정
      */
-    function view_xp_down()
-    {
+    function view_xp_down () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -899,7 +719,7 @@ class Soft extends CI_Controller
 
             $params = array(
                 "window7" => $window7,
-                "idx" => $idx
+                "idx"     => $idx
             );
 
             $this->soft_model->modify_xp_down($params);
@@ -913,8 +733,7 @@ class Soft extends CI_Controller
     /*
      * xp_down 데이터 삭제
      */
-    public function xp_down_delete()
-    {
+    public function xp_down_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -932,8 +751,7 @@ class Soft extends CI_Controller
     /*
      * ms_up 등록
      */
-    public function write_ms_up()
-    {
+    public function write_ms_up () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -942,10 +760,7 @@ class Soft extends CI_Controller
             $office2003_pro = $this->input->post('office2003_pro', TRUE);
             $office2007_pro = $this->input->post('office2007_pro', TRUE);
 
-            $this->soft_model->insert_ms_up(
-                $office2003_pro,
-                $office2007_pro
-            );
+            $this->soft_model->insert_ms_up($office2003_pro, $office2007_pro);
 
             alert('게시물 등록 완료', '../ms_up/');
 
@@ -959,8 +774,7 @@ class Soft extends CI_Controller
     /**
      * ms_up 데이터 수정
      */
-    function view_ms_up()
-    {
+    function view_ms_up () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -980,7 +794,7 @@ class Soft extends CI_Controller
             $params = array(
                 "office2003_pro" => $office2003_pro,
                 "office2007_pro" => $office2007_pro,
-                "idx" => $idx
+                "idx"            => $idx
             );
 
             $this->soft_model->modify_ms_up($params);
@@ -994,8 +808,7 @@ class Soft extends CI_Controller
     /*
      * ms_up 데이터 삭제
      */
-    public function ms_up_delete()
-    {
+    public function ms_up_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -1013,8 +826,7 @@ class Soft extends CI_Controller
     /*
      *  quark_up 등록
      */
-    public function write_quark_up()
-    {
+    public function write_quark_up () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -1029,16 +841,7 @@ class Soft extends CI_Controller
             $sejong_font = $this->input->post('sejong_font', TRUE);
             $user = $this->input->post('user', TRUE);
 
-            $this->soft_model->insert_quark_up(
-                $quark3,
-                $quark4,
-                $quark8,
-                $quark9,
-                $quark2015,
-                $quark2015_serial,
-                $sejong_font,
-                $user
-            );
+            $this->soft_model->insert_quark_up($quark3, $quark4, $quark8, $quark9, $quark2015, $quark2015_serial, $sejong_font, $user);
 
             alert('게시물 등록 완료', '../quark_up/');
 
@@ -1052,8 +855,7 @@ class Soft extends CI_Controller
     /**
      * quark_up 데이터 수정
      */
-    function view_quark_up()
-    {
+    function view_quark_up () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -1077,15 +879,15 @@ class Soft extends CI_Controller
             $user = trim($this->input->post("user"));
 
             $params = array(
-                "quark3" => $quark3,
-                "quark4" => $quark4,
-                "quark8" => $quark8,
-                "quark9" => $quark9,
-                "quark2015" => $quark2015,
+                "quark3"           => $quark3,
+                "quark4"           => $quark4,
+                "quark8"           => $quark8,
+                "quark9"           => $quark9,
+                "quark2015"        => $quark2015,
                 "quark2015_serial" => $quark2015_serial,
-                "sejong_font" => $sejong_font,
-                "user" => $user,
-                "idx" => $idx
+                "sejong_font"      => $sejong_font,
+                "user"             => $user,
+                "idx"              => $idx
             );
 
             $this->soft_model->modify_quark_up($params);
@@ -1099,8 +901,7 @@ class Soft extends CI_Controller
     /*
      * quark_up 데이터 삭제
      */
-    public function quark_up_delete()
-    {
+    public function quark_up_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -1118,8 +919,7 @@ class Soft extends CI_Controller
     /*
      *  asiafont_up 등록
      */
-    public function write_asiafont_up()
-    {
+    public function write_asiafont_up () {
         if ($_POST) {
             // 글쓰기 POST 전송 시
 
@@ -1128,10 +928,7 @@ class Soft extends CI_Controller
             $asiafont2008 = $this->input->post('asiafont2008', TRUE);
             $integrated_Package = $this->input->post('integrated_Package', TRUE);
 
-            $this->soft_model->insert_asiafont_up(
-                $asiafont2008,
-                $integrated_Package
-            );
+            $this->soft_model->insert_asiafont_up($asiafont2008, $integrated_Package);
 
             alert('게시물 등록 완료', '../asiafont_up/');
 
@@ -1145,8 +942,7 @@ class Soft extends CI_Controller
     /**
      * asiafont_up 데이터 수정
      */
-    function view_asiafont_up()
-    {
+    function view_asiafont_up () {
         // 번호에 해당하는 데이터 가져오기
         $idx = $this->uri->segment(3);
 
@@ -1164,9 +960,9 @@ class Soft extends CI_Controller
             $integrated_Package = trim($this->input->post("integrated_Package"));
 
             $params = array(
-                "asiafont2008" => $asiafont2008,
+                "asiafont2008"       => $asiafont2008,
                 "integrated_Package" => $integrated_Package,
-                "idx" => $idx
+                "idx"                => $idx
             );
 
             $this->soft_model->modify_asiafont_up($params);
@@ -1180,8 +976,7 @@ class Soft extends CI_Controller
     /*
      * asiafont_up 데이터 삭제
      */
-    public function asiafont_up_delete()
-    {
+    public function asiafont_up_delete () {
         $this->load->helper('alert');
         // 게시물 번호에 해당하는 게시물 삭제
         $idx = $this->uri->segment(3);
@@ -1200,8 +995,7 @@ class Soft extends CI_Controller
      * 데이터 엑셀 출력 - 모니터 사용리스트
      */
 
-    public function print_moniter_list()
-    {
+    public function print_moniter_list () {
         # PHPExcel 라이브러리 로드
         $this->load->library('PHPExcel');
 
@@ -1215,35 +1009,29 @@ class Soft extends CI_Controller
 
         # 테두리
         # 셀 전체(윤곽선 + 안쪽)
-        $this->phpexcel->getActiveSheet()->getStyle('A1:J60')->getBorders()
-            ->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $this->phpexcel->getActiveSheet()->getStyle('A1:J60')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
         # 전체 폰트 및 텍스트정렬 설정
-        $this->phpexcel->getActiveSheet()->duplicateStyleArray(
-            array(
-                'font' => array(
-                    'size' => 11
-                ),
-                'alignment' => array(
-                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
-                    'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
-                )
+        $this->phpexcel->getActiveSheet()->duplicateStyleArray(array(
+            'font'      => array(
+                'size' => 11
             ),
-            'A1:J60'
-        );
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                'vertical'   => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            )
+        ), 'A1:J60');
 
         //개행문자처리
         $this->phpexcel->getActiveSheet()->getStyle('A1:J60')->getAlignment()->setWrapText(true);
 
         # cell 헤더 설정
         $this->phpexcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $this->phpexcel->getActiveSheet()->getStyle("A1")->getFill()
-            ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
+        $this->phpexcel->getActiveSheet()->getStyle("A1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
         $this->phpexcel->getActiveSheet()->setCellValue('A1', '모니터 현재사용내역');
         $this->phpexcel->getActiveSheet()->getStyle('A2:J2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->phpexcel->getActiveSheet()->getStyle('A')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $this->phpexcel->getActiveSheet()->getStyle("A2:J2")->getFill()
-            ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
+        $this->phpexcel->getActiveSheet()->getStyle("A2:J2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
         $this->phpexcel->getActiveSheet()->setCellValue('A2', '사용자');
         $this->phpexcel->getActiveSheet()->setCellValue('B2', '제조사');
         $this->phpexcel->getActiveSheet()->setCellValue('C2', '제품명');
@@ -1282,24 +1070,24 @@ class Soft extends CI_Controller
          */
         $num = '3';
         foreach ($data['use_moniter_list'] as $lt):
-            $this->phpexcel->getActiveSheet()->setCellValue('A' . $num, $lt->user_name);
-            $this->phpexcel->getActiveSheet()->setCellValue('B' . $num, $lt->company);
-            $this->phpexcel->getActiveSheet()->setCellValue('C' . $num, $lt->product_name);
-            $this->phpexcel->getActiveSheet()->setCellValue('D' . $num, $lt->model_code);
-            $this->phpexcel->getActiveSheet()->setCellValue('E' . $num, $lt->model_name);
-            $this->phpexcel->getActiveSheet()->setCellValue('F' . $num, $lt->identify);
-            $this->phpexcel->getActiveSheet()->setCellValue('G' . $num, $lt->produce_ym);
-            $this->phpexcel->getActiveSheet()->setCellValue('H' . $num, $lt->soft_num);
-            $this->phpexcel->getActiveSheet()->setCellValue('I' . $num, $lt->gian_num);
-            $this->phpexcel->getActiveSheet()->setCellValue('J' . $num, $lt->buy_day);
+            $this->phpexcel->getActiveSheet()->setCellValue('A'.$num, $lt->user_name);
+            $this->phpexcel->getActiveSheet()->setCellValue('B'.$num, $lt->company);
+            $this->phpexcel->getActiveSheet()->setCellValue('C'.$num, $lt->product_name);
+            $this->phpexcel->getActiveSheet()->setCellValue('D'.$num, $lt->model_code);
+            $this->phpexcel->getActiveSheet()->setCellValue('E'.$num, $lt->model_name);
+            $this->phpexcel->getActiveSheet()->setCellValue('F'.$num, $lt->identify);
+            $this->phpexcel->getActiveSheet()->setCellValue('G'.$num, $lt->produce_ym);
+            $this->phpexcel->getActiveSheet()->setCellValue('H'.$num, $lt->soft_num);
+            $this->phpexcel->getActiveSheet()->setCellValue('I'.$num, $lt->gian_num);
+            $this->phpexcel->getActiveSheet()->setCellValue('J'.$num, $lt->buy_day);
             $num++;
         endforeach;
 
 
         # 파일로 내보낸다. 파일명은 'filename.xls' 이다.
-        $filename = '모니터현재사용내역_' . date('Ymd') . '.xls';
+        $filename = '모니터현재사용내역_'.date('Ymd').'.xls';
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
         # Excel5 포맷(excel 2003 .XLS file)으로 저장한다.
         # 두 번째 매개변수를 'Excel2007'로 바꾸면 Excel 2007 .XLSX 포맷으로 저장한다.
@@ -1312,8 +1100,7 @@ class Soft extends CI_Controller
      * 데이터 엑셀 출력 - 본체(PC) 사용리스트
      */
 
-    public function print_pc_list()
-    {
+    public function print_pc_list () {
         # PHPExcel 라이브러리 로드
         $this->load->library('PHPExcel');
 
@@ -1327,35 +1114,29 @@ class Soft extends CI_Controller
 
         # 테두리
         # 셀 전체(윤곽선 + 안쪽)
-        $this->phpexcel->getActiveSheet()->getStyle('A1:O60')->getBorders()
-            ->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $this->phpexcel->getActiveSheet()->getStyle('A1:O60')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
         # 전체 폰트 및 텍스트정렬 설정
-        $this->phpexcel->getActiveSheet()->duplicateStyleArray(
-            array(
-                'font' => array(
-                    'size' => 11
-                ),
-                'alignment' => array(
-                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
-                    'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
-                )
+        $this->phpexcel->getActiveSheet()->duplicateStyleArray(array(
+            'font'      => array(
+                'size' => 11
             ),
-            'A1:O60'
-        );
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                'vertical'   => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            )
+        ), 'A1:O60');
 
         //개행문자처리
         $this->phpexcel->getActiveSheet()->getStyle('A1:O60')->getAlignment()->setWrapText(true);
 
         # cell 헤더 설정
         $this->phpexcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $this->phpexcel->getActiveSheet()->getStyle("A1")->getFill()
-            ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
+        $this->phpexcel->getActiveSheet()->getStyle("A1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
         $this->phpexcel->getActiveSheet()->setCellValue('A1', '본체(PC) 현재사용내역');
         $this->phpexcel->getActiveSheet()->getStyle('A2:O2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->phpexcel->getActiveSheet()->getStyle('A')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $this->phpexcel->getActiveSheet()->getStyle("A2:O2")->getFill()
-            ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
+        $this->phpexcel->getActiveSheet()->getStyle("A2:O2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB("FFE400");
         $this->phpexcel->getActiveSheet()->setCellValue('A2', '사용자');
         $this->phpexcel->getActiveSheet()->setCellValue('B2', '제조사');
         $this->phpexcel->getActiveSheet()->setCellValue('C2', '모델명');
@@ -1404,29 +1185,29 @@ class Soft extends CI_Controller
          */
         $num = '3';
         foreach ($data['use_pc_list'] as $lt):
-            $this->phpexcel->getActiveSheet()->setCellValue('A' . $num, $lt->user_name);
-            $this->phpexcel->getActiveSheet()->setCellValue('B' . $num, $lt->company);
-            $this->phpexcel->getActiveSheet()->setCellValue('C' . $num, $lt->model_name);
-            $this->phpexcel->getActiveSheet()->setCellValue('D' . $num, $lt->model_code);
-            $this->phpexcel->getActiveSheet()->setCellValue('E' . $num, $lt->produce_number);
-            $this->phpexcel->getActiveSheet()->setCellValue('F' . $num, $lt->product_code);
-            $this->phpexcel->getActiveSheet()->setCellValue('G' . $num, $lt->identify);
-            $this->phpexcel->getActiveSheet()->setCellValue('H' . $num, $lt->produce_ym);
-            $this->phpexcel->getActiveSheet()->setCellValue('I' . $num, $lt->g_cpu);
-            $this->phpexcel->getActiveSheet()->setCellValue('J' . $num, $lt->g_ram);
-            $this->phpexcel->getActiveSheet()->setCellValue('K' . $num, $lt->g_hdd_c);
-            $this->phpexcel->getActiveSheet()->setCellValue('L' . $num, $lt->g_hdd_d);
-            $this->phpexcel->getActiveSheet()->setCellValue('M' . $num, $lt->g_graphic);
-            $this->phpexcel->getActiveSheet()->setCellValue('N' . $num, $lt->gian_num);
-            $this->phpexcel->getActiveSheet()->setCellValue('O' . $num, $lt->buy_day);
+            $this->phpexcel->getActiveSheet()->setCellValue('A'.$num, $lt->user_name);
+            $this->phpexcel->getActiveSheet()->setCellValue('B'.$num, $lt->company);
+            $this->phpexcel->getActiveSheet()->setCellValue('C'.$num, $lt->model_name);
+            $this->phpexcel->getActiveSheet()->setCellValue('D'.$num, $lt->model_code);
+            $this->phpexcel->getActiveSheet()->setCellValue('E'.$num, $lt->produce_number);
+            $this->phpexcel->getActiveSheet()->setCellValue('F'.$num, $lt->product_code);
+            $this->phpexcel->getActiveSheet()->setCellValue('G'.$num, $lt->identify);
+            $this->phpexcel->getActiveSheet()->setCellValue('H'.$num, $lt->produce_ym);
+            $this->phpexcel->getActiveSheet()->setCellValue('I'.$num, $lt->g_cpu);
+            $this->phpexcel->getActiveSheet()->setCellValue('J'.$num, $lt->g_ram);
+            $this->phpexcel->getActiveSheet()->setCellValue('K'.$num, $lt->g_hdd_c);
+            $this->phpexcel->getActiveSheet()->setCellValue('L'.$num, $lt->g_hdd_d);
+            $this->phpexcel->getActiveSheet()->setCellValue('M'.$num, $lt->g_graphic);
+            $this->phpexcel->getActiveSheet()->setCellValue('N'.$num, $lt->gian_num);
+            $this->phpexcel->getActiveSheet()->setCellValue('O'.$num, $lt->buy_day);
             $num++;
         endforeach;
 
 
         # 파일로 내보낸다. 파일명은 'filename.xls' 이다.
-        $filename = '본체(PC)현재사용내역_' . date('Ymd') . '.xls';
+        $filename = '본체(PC)현재사용내역_'.date('Ymd').'.xls';
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
         # Excel5 포맷(excel 2003 .XLS file)으로 저장한다.
         # 두 번째 매개변수를 'Excel2007'로 바꾸면 Excel 2007 .XLSX 포맷으로 저장한다.

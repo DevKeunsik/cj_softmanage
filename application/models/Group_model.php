@@ -6,8 +6,7 @@
 
 class Group_model extends CI_Model
 {
-    function __construct()
-    {
+    function __construct () {
         parent::__construct();
         $this->load->database();
     }
@@ -16,8 +15,7 @@ class Group_model extends CI_Model
      * 전산내용 가져오기 - join으로 해본다
      */
 
-    function get_g_view($user_idx)
-    {
+    function get_g_view ($user_idx) {
         $sql = "SELECT
         g_moniter.idx as m_idx,
         g_moniter.user_idx as m_user_idx,
@@ -130,12 +128,34 @@ class Group_model extends CI_Model
         WHERE g_moniter.user_idx=$user_idx";
         $query = $this->db->query($sql);
         $result = $query->row();
+
         return $result;
     }
 
-    function get_view_moniter($user_idx)
-    {
-        $sql = "SELECT * FROM g_moniter WHERE user_idx='$user_idx'";
+    function get_view_all ($user_idx) {
+
+        $arr = array(
+            'moniter',
+            'pc',
+            'keyboard',
+            'mouse',
+            'headset',
+            'cell'
+        );
+
+        $result = array();
+        foreach ($arr as $k) {
+            $sql = "SELECT * FROM g_system WHERE type='".$k."' and user_idx='$user_idx'";
+            $query = $this->db->query($sql);
+            $result[$k] = $query->result_array();
+        }
+
+
+        return $result;
+    }
+
+    function get_view_moniter ($user_idx) {
+        $sql = "SELECT * FROM g_system WHERE type='moditer' and user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
 
@@ -143,9 +163,8 @@ class Group_model extends CI_Model
 
         return $result;
     }
-    
-    function get_view_pc($user_idx)
-    {
+
+    function get_view_pc ($user_idx) {
         $sql = "SELECT * FROM g_pc WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -155,8 +174,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_keyboard($user_idx)
-    {
+    function get_view_keyboard ($user_idx) {
         $sql = "SELECT * FROM g_keyboard WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -166,8 +184,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_mouse($user_idx)
-    {
+    function get_view_mouse ($user_idx) {
         $sql = "SELECT * FROM g_mouse WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -177,8 +194,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_headset($user_idx)
-    {
+    function get_view_headset ($user_idx) {
         $sql = "SELECT * FROM g_headset WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -188,8 +204,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_cell($user_idx)
-    {
+    function get_view_cell ($user_idx) {
         $sql = "SELECT * FROM g_cell WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -199,8 +214,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_window($user_idx)
-    {
+    function get_view_window ($user_idx) {
         $sql = "SELECT * FROM g_window WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -210,8 +224,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_ms($user_idx)
-    {
+    function get_view_ms ($user_idx) {
         $sql = "SELECT * FROM g_ms WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -221,8 +234,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_hangul($user_idx)
-    {
+    function get_view_hangul ($user_idx) {
         $sql = "SELECT * FROM g_hangul WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -232,8 +244,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_security($user_idx)
-    {
+    function get_view_security ($user_idx) {
         $sql = "SELECT * FROM g_security WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -243,8 +254,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_quark($user_idx)
-    {
+    function get_view_quark ($user_idx) {
         $sql = "SELECT * FROM g_quark WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -254,8 +264,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_adobe($user_idx)
-    {
+    function get_view_adobe ($user_idx) {
         $sql = "SELECT * FROM g_adobe WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -265,8 +274,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_font($user_idx)
-    {
+    function get_view_font ($user_idx) {
         $sql = "SELECT * FROM g_font WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -276,8 +284,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_compress($user_idx)
-    {
+    function get_view_compress ($user_idx) {
         $sql = "SELECT * FROM g_compress WHERE user_idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -287,8 +294,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function get_view_user($user_idx)
-    {
+    function get_view_user ($user_idx) {
         $sql = "SELECT * FROM g_gs WHERE idx='$user_idx'";
 
         $query = $this->db->query($sql);
@@ -298,8 +304,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_moniter($idx)
-    {
+    function update_view_moniter ($idx) {
         $sql = "SELECT * FROM g_moniter WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -309,8 +314,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_pc($idx)
-    {
+    function update_view_pc ($idx) {
         $sql = "SELECT * FROM g_pc WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -320,8 +324,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_keyboard($idx)
-    {
+    function update_view_keyboard ($idx) {
         $sql = "SELECT * FROM g_keyboard WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -331,8 +334,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_mouse($idx)
-    {
+    function update_view_mouse ($idx) {
         $sql = "SELECT * FROM g_mouse WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -342,8 +344,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_headset($idx)
-    {
+    function update_view_headset ($idx) {
         $sql = "SELECT * FROM g_headset WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -353,8 +354,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_cell($idx)
-    {
+    function update_view_cell ($idx) {
         $sql = "SELECT * FROM g_cell WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -364,8 +364,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_window($idx)
-    {
+    function update_view_window ($idx) {
         $sql = "SELECT * FROM g_window WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -375,8 +374,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_ms($idx)
-    {
+    function update_view_ms ($idx) {
         $sql = "SELECT * FROM g_ms WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -387,8 +385,7 @@ class Group_model extends CI_Model
     }
 
 
-    function update_view_hangul($idx)
-    {
+    function update_view_hangul ($idx) {
         $sql = "SELECT * FROM g_hangul WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -399,8 +396,7 @@ class Group_model extends CI_Model
     }
 
 
-    function update_view_security($idx)
-    {
+    function update_view_security ($idx) {
         $sql = "SELECT * FROM g_security WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -410,8 +406,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_quark($idx)
-    {
+    function update_view_quark ($idx) {
         $sql = "SELECT * FROM g_quark WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -421,8 +416,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_adobe($idx)
-    {
+    function update_view_adobe ($idx) {
         $sql = "SELECT * FROM g_adobe WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -432,8 +426,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_font($idx)
-    {
+    function update_view_font ($idx) {
         $sql = "SELECT * FROM g_font WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -443,8 +436,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function update_view_compress($idx)
-    {
+    function update_view_compress ($idx) {
         $sql = "SELECT * FROM g_compress WHERE idx=$idx";
 
         $query = $this->db->query($sql);
@@ -469,8 +461,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 모니터
      */
-    function update_g_moniter($params)
-    {
+    function update_g_moniter ($params) {
 
         $sql = "
 			UPDATE  g_moniter  
@@ -499,8 +490,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 본체
      */
-    function update_g_pc($params)
-    {
+    function update_g_pc ($params) {
 
         $sql = "
 			UPDATE g_pc  
@@ -534,8 +524,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 키보드
      */
-    function update_g_keyboard($params)
-    {
+    function update_g_keyboard ($params) {
 
         $sql = "
 			UPDATE  g_keyboard  
@@ -559,8 +548,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 마우스
      */
-    function update_g_mouse($params)
-    {
+    function update_g_mouse ($params) {
 
         $sql = "
 			UPDATE  g_mouse  
@@ -584,8 +572,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 헤드셋
      */
-    function update_g_headset($params)
-    {
+    function update_g_headset ($params) {
 
         $sql = "
 			UPDATE  g_headset  
@@ -609,8 +596,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 전화기
      */
-    function update_g_cell($params)
-    {
+    function update_g_cell ($params) {
 
         $sql = "
 			UPDATE  g_cell  
@@ -632,8 +618,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - Window OS
      */
-    function update_g_window($params)
-    {
+    function update_g_window ($params) {
 
         $sql = "
 			UPDATE  g_window  
@@ -655,8 +640,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - MS-Office
      */
-    function update_g_ms($params)
-    {
+    function update_g_ms ($params) {
 
         $sql = "
 			UPDATE  g_ms  
@@ -678,8 +662,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 한글
      */
-    function update_g_hangul($params)
-    {
+    function update_g_hangul ($params) {
 
         $sql = "
 			UPDATE  g_hangul  
@@ -701,8 +684,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 보안프로그램
      */
-    function update_g_security($params)
-    {
+    function update_g_security ($params) {
 
         $sql = "
 			UPDATE  g_security  
@@ -724,8 +706,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - Quark
      */
-    function update_g_quark($params)
-    {
+    function update_g_quark ($params) {
 
         $sql = "
 			UPDATE  g_quark  
@@ -748,8 +729,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - adobe
      */
-    function update_g_adobe($params)
-    {
+    function update_g_adobe ($params) {
 
         $sql = "
 			UPDATE  g_adobe  
@@ -772,8 +752,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - font
      */
-    function update_g_font($params)
-    {
+    function update_g_font ($params) {
 
         $sql = "
 			UPDATE  g_font  
@@ -798,8 +777,7 @@ class Group_model extends CI_Model
     /*
      * 전산내용수정 - 압축프로그램
      */
-    function update_g_compress($params)
-    {
+    function update_g_compress ($params) {
 
         $sql = "
 			UPDATE  g_compress  
@@ -822,375 +800,312 @@ class Group_model extends CI_Model
      * 전산 항목 부분추가(ADD)
      */
 
-    function g_add_moniter(
-        $user_idx, $m_company, $m_product_name, $m_model_code,
-        $m_model_name, $m_identify, $m_produce_ym, $m_soft_num, $m_gian_num, $m_buy_day)
-    {
+    function g_add_moniter ($user_idx, $m_company, $m_product_name, $m_model_code, $m_model_name, $m_identify, $m_produce_ym, $m_soft_num, $m_gian_num, $m_buy_day) {
         $sql = "INSERT INTO g_moniter (
         user_idx, company, product_name, model_code, model_name, identify, produce_ym ,soft_num, gian_num, buy_day
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $m_company . "',
-        '" . $m_product_name . "',
-        '" . $m_model_code . "',
-        '" . $m_model_name . "',
-        '" . $m_identify . "',
-        '" . $m_produce_ym . "',
-        '" . $m_soft_num . "',
-        '" . $m_gian_num . "',
-        '" . $m_buy_day . "'
+        '".$user_idx."',
+        '".$m_company."',
+        '".$m_product_name."',
+        '".$m_model_code."',
+        '".$m_model_name."',
+        '".$m_identify."',
+        '".$m_produce_ym."',
+        '".$m_soft_num."',
+        '".$m_gian_num."',
+        '".$m_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_pc(
-        $user_idx, $p_company, $p_model_name, $p_model_code, $p_produce_number, $p_product_code, $p_identify, $p_produce_ym,
-        $p_g_cpu, $p_g_ram, $p_g_hdd_c, $p_g_hdd_d, $p_g_graphic, $p_gian_num, $p_buy_day
-    )
-    {
+    function g_add_pc ($user_idx, $p_company, $p_model_name, $p_model_code, $p_produce_number, $p_product_code, $p_identify, $p_produce_ym, $p_g_cpu, $p_g_ram, $p_g_hdd_c, $p_g_hdd_d, $p_g_graphic, $p_gian_num, $p_buy_day) {
         $sql = "INSERT INTO g_pc (
         user_idx, company, model_name, model_code, produce_number, product_code, identify, produce_ym, 
         g_cpu, g_ram, g_hdd_c, g_hdd_d, g_graphic, gian_num, buy_day
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $p_company . "',
-        '" . $p_model_name . "',
-        '" . $p_model_code . "',
-        '" . $p_produce_number . "',
-        '" . $p_product_code . "',
-        '" . $p_identify . "',
-        '" . $p_produce_ym . "',
-        '" . $p_g_cpu . "',
-        '" . $p_g_ram . "',
-        '" . $p_g_hdd_c . "',
-        '" . $p_g_hdd_d . "',
-        '" . $p_g_graphic . "',
-        '" . $p_gian_num . "',
-        '" . $p_buy_day . "'
+        '".$user_idx."',
+        '".$p_company."',
+        '".$p_model_name."',
+        '".$p_model_code."',
+        '".$p_produce_number."',
+        '".$p_product_code."',
+        '".$p_identify."',
+        '".$p_produce_ym."',
+        '".$p_g_cpu."',
+        '".$p_g_ram."',
+        '".$p_g_hdd_c."',
+        '".$p_g_hdd_d."',
+        '".$p_g_graphic."',
+        '".$p_gian_num."',
+        '".$p_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_keyboard(
-        $user_idx, $k_product_name, $k_identify, $k_produce_ym, $k_gian_num, $k_buy_day
-    )
-    {
+    function g_add_keyboard ($user_idx, $k_product_name, $k_identify, $k_produce_ym, $k_gian_num, $k_buy_day) {
         $sql = "INSERT INTO g_keyboard (
         user_idx, product_name, identify, produce_ym, gian_num, buy_day
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $k_product_name . "',
-        '" . $k_identify . "',
-        '" . $k_produce_ym . "',
-        '" . $k_gian_num . "',
-        '" . $k_buy_day . "'
+        '".$user_idx."',
+        '".$k_product_name."',
+        '".$k_identify."',
+        '".$k_produce_ym."',
+        '".$k_gian_num."',
+        '".$k_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_mouse(
-        $user_idx, $mu_product_name, $mu_identify, $mu_produce_ym, $mu_gian_num, $mu_buy_day
-    )
-    {
+    function g_add_mouse ($user_idx, $mu_product_name, $mu_identify, $mu_produce_ym, $mu_gian_num, $mu_buy_day) {
         $sql = "INSERT INTO g_mouse (
         user_idx, product_name, identify, produce_ym, gian_num, buy_day
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $mu_product_name . "',
-        '" . $mu_identify . "',
-        '" . $mu_produce_ym . "',
-        '" . $mu_gian_num . "',
-        '" . $mu_buy_day . "'
+        '".$user_idx."',
+        '".$mu_product_name."',
+        '".$mu_identify."',
+        '".$mu_produce_ym."',
+        '".$mu_gian_num."',
+        '".$mu_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_headset(
-        $user_idx, $h_product_name, $h_gian_num, $h_buy_day
-    )
-    {
+    function g_add_headset ($user_idx, $h_product_name, $h_gian_num, $h_buy_day) {
         $sql = "INSERT INTO g_headset (
         user_idx, product_name, gian_num, buy_day
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $h_product_name . "',
-        '" . $h_gian_num . "',
-        '" . $h_buy_day . "'
+        '".$user_idx."',
+        '".$h_product_name."',
+        '".$h_gian_num."',
+        '".$h_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_cell(
-        $user_idx, $c_product_name, $c_gian_num, $c_buy_day
-    )
-    {
+    function g_add_cell ($user_idx, $c_product_name, $c_gian_num, $c_buy_day) {
         $sql = "INSERT INTO g_cell (
         user_idx, product_name, gian_num, buy_day
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $c_product_name . "',
-        '" . $c_gian_num . "',
-        '" . $c_buy_day . "'
+        '".$user_idx."',
+        '".$c_product_name."',
+        '".$c_gian_num."',
+        '".$c_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_window(
-        $user_idx, $win_product_number, $win_gian_num, $win_duration
-    )
-    {
+    function g_add_window ($user_idx, $win_product_number, $win_gian_num, $win_duration) {
         $sql = "INSERT INTO g_window (
         user_idx, product_number, gian_num, duration
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $win_product_number . "',
-        '" . $win_gian_num . "',
-        '" . $win_duration . "'
+        '".$user_idx."',
+        '".$win_product_number."',
+        '".$win_gian_num."',
+        '".$win_duration."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_ms(
-        $user_idx, $ms_product_number, $ms_gian_num, $ms_duration
-    )
-    {
+    function g_add_ms ($user_idx, $ms_product_number, $ms_gian_num, $ms_duration) {
         $sql = "INSERT INTO g_ms (
         user_idx, product_number, gian_num, duration
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $ms_product_number . "',
-        '" . $ms_gian_num . "',
-        '" . $ms_duration . "'
+        '".$user_idx."',
+        '".$ms_product_number."',
+        '".$ms_gian_num."',
+        '".$ms_duration."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_hangul(
-        $user_idx, $han_product_number, $han_gian_num, $han_duration
-    )
-    {
+    function g_add_hangul ($user_idx, $han_product_number, $han_gian_num, $han_duration) {
         $sql = "INSERT INTO g_hangul (
         user_idx, product_number, gian_num, duration
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $han_product_number . "',
-        '" . $han_gian_num . "',
-        '" . $han_duration . "'
+        '".$user_idx."',
+        '".$han_product_number."',
+        '".$han_gian_num."',
+        '".$han_duration."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_security(
-        $user_idx, $security_product_number, $security_gian_num, $security_duration
-    )
-    {
+    function g_add_security ($user_idx, $security_product_number, $security_gian_num, $security_duration) {
         $sql = "INSERT INTO g_security (
         user_idx, product_number, gian_num, duration
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $security_product_number . "',
-        '" . $security_gian_num . "',
-        '" . $security_duration . "'
+        '".$user_idx."',
+        '".$security_product_number."',
+        '".$security_gian_num."',
+        '".$security_duration."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_quark(
-        $user_idx, $quark_product_number, $quark_font, $quark_gian_num, $quark_duration
-    )
-    {
+    function g_add_quark ($user_idx, $quark_product_number, $quark_font, $quark_gian_num, $quark_duration) {
         $sql = "INSERT INTO g_quark (
         user_idx, product_number, font, gian_num, duration
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $quark_product_number . "',
-        '" . $quark_font . "',
-        '" . $quark_gian_num . "',
-        '" . $quark_duration . "'
+        '".$user_idx."',
+        '".$quark_product_number."',
+        '".$quark_font."',
+        '".$quark_gian_num."',
+        '".$quark_duration."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_adobe(
-        $user_idx, $adobe_product, $adobe_gian_num, $adobe_duration, $adobe_remarks
-    )
-    {
+    function g_add_adobe ($user_idx, $adobe_product, $adobe_gian_num, $adobe_duration, $adobe_remarks) {
         $sql = "INSERT INTO g_adobe (
         user_idx, adobe_product, gian_num, duration, remarks
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $adobe_product . "',
-        '" . $adobe_gian_num . "',
-        '" . $adobe_duration . "',
-        '" . $adobe_remarks . "'
+        '".$user_idx."',
+        '".$adobe_product."',
+        '".$adobe_gian_num."',
+        '".$adobe_duration."',
+        '".$adobe_remarks."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_font(
-        $user_idx, $font_asia, $font_a_gian_num, $font_a_duration, $font_mukhyang, $font_m_gian_num, $font_m_duration
-    )
-    {
+    function g_add_font ($user_idx, $font_asia, $font_a_gian_num, $font_a_duration, $font_mukhyang, $font_m_gian_num, $font_m_duration) {
         $sql = "INSERT INTO g_font (
         user_idx, asia, a_gian_num, a_duration, mukhyang, m_gian_num, m_duration
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $font_asia . "',
-        '" . $font_a_gian_num . "',
-        '" . $font_a_duration . "',
-        '" . $font_mukhyang . "',
-        '" . $font_m_gian_num . "',
-        '" . $font_m_duration . "'
+        '".$user_idx."',
+        '".$font_asia."',
+        '".$font_a_gian_num."',
+        '".$font_a_duration."',
+        '".$font_mukhyang."',
+        '".$font_m_gian_num."',
+        '".$font_m_duration."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function g_add_compress(
-        $user_idx, $compress_alzip, $compress_gian_num, $compress_duration
-    )
-    {
+    function g_add_compress ($user_idx, $compress_alzip, $compress_gian_num, $compress_duration) {
         $sql = "INSERT INTO g_security (
         user_idx, alzip, gian_num, duration
         ) 
         VALUES (
-        '" . $user_idx . "',
-        '" . $compress_alzip . "',
-        '" . $compress_gian_num . "',
-        '" . $compress_duration . "'
+        '".$user_idx."',
+        '".$compress_alzip."',
+        '".$compress_gian_num."',
+        '".$compress_duration."'
         )";
         $query = $this->db->query($sql);
     }
 
     ### 전산실보관 신규등록,보관하기,삭제하기 ###
 
-    function insert_keep_pc(
-        $p_company, $p_model_name, $p_model_code, $p_produce_number, $p_product_code, $p_identify, $p_produce_ym,
-        $p_g_cpu, $p_g_ram, $p_g_hdd_c, $p_g_hdd_d, $p_g_graphic, $p_gian_num, $p_buy_day
-    )
-    {
+    function insert_keep_pc ($p_company, $p_model_name, $p_model_code, $p_produce_number, $p_product_code, $p_identify, $p_produce_ym, $p_g_cpu, $p_g_ram, $p_g_hdd_c, $p_g_hdd_d, $p_g_graphic, $p_gian_num, $p_buy_day) {
         $sql = "INSERT INTO jeonsan_pc (
         company, model_name, model_code, produce_number, product_code, identify, produce_ym, 
         g_cpu, g_ram, g_hdd_c, g_hdd_d, g_graphic, gian_num, buy_day
         ) 
         VALUES (
-        '" . $p_company . "',
-        '" . $p_model_name . "',
-        '" . $p_model_code . "',
-        '" . $p_produce_number . "',
-        '" . $p_product_code . "',
-        '" . $p_identify . "',
-        '" . $p_produce_ym . "',
-        '" . $p_g_cpu . "',
-        '" . $p_g_ram . "',
-        '" . $p_g_hdd_c . "',
-        '" . $p_g_hdd_d . "',
-        '" . $p_g_graphic . "',
-        '" . $p_gian_num . "',
-        '" . $p_buy_day . "'
+        '".$p_company."',
+        '".$p_model_name."',
+        '".$p_model_code."',
+        '".$p_produce_number."',
+        '".$p_product_code."',
+        '".$p_identify."',
+        '".$p_produce_ym."',
+        '".$p_g_cpu."',
+        '".$p_g_ram."',
+        '".$p_g_hdd_c."',
+        '".$p_g_hdd_d."',
+        '".$p_g_graphic."',
+        '".$p_gian_num."',
+        '".$p_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function insert_keep_moniter(
-        $m_company, $m_product_name, $m_model_code,
-        $m_model_name, $m_identify, $m_produce_ym, $m_soft_num, $m_gian_num, $m_buy_day)
-    {
+    function insert_keep_moniter ($m_company, $m_product_name, $m_model_code, $m_model_name, $m_identify, $m_produce_ym, $m_soft_num, $m_gian_num, $m_buy_day) {
         $sql = "INSERT INTO jeonsan_moniter (
         company, product_name, model_code, model_name, identify, produce_ym ,soft_num, gian_num, buy_day
         ) 
         VALUES (
-        '" . $m_company . "',
-        '" . $m_product_name . "',
-        '" . $m_model_code . "',
-        '" . $m_model_name . "',
-        '" . $m_identify . "',
-        '" . $m_produce_ym . "',
-        '" . $m_soft_num . "',
-        '" . $m_gian_num . "',
-        '" . $m_buy_day . "'
+        '".$m_company."',
+        '".$m_product_name."',
+        '".$m_model_code."',
+        '".$m_model_name."',
+        '".$m_identify."',
+        '".$m_produce_ym."',
+        '".$m_soft_num."',
+        '".$m_gian_num."',
+        '".$m_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function insert_keep_keyboard(
-        $k_product_name, $k_identify, $k_produce_ym, $k_gian_num, $k_buy_day
-    )
-    {
+    function insert_keep_keyboard ($k_product_name, $k_identify, $k_produce_ym, $k_gian_num, $k_buy_day) {
         $sql = "INSERT INTO jeonsan_keyboard (
         product_name, identify, produce_ym, gian_num, buy_day
         ) 
         VALUES (
-        '" . $k_product_name . "',
-        '" . $k_identify . "',
-        '" . $k_produce_ym . "',
-        '" . $k_gian_num . "',
-        '" . $k_buy_day . "'
+        '".$k_product_name."',
+        '".$k_identify."',
+        '".$k_produce_ym."',
+        '".$k_gian_num."',
+        '".$k_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function insert_keep_mouse(
-        $mu_product_name, $mu_identify, $mu_produce_ym, $mu_gian_num, $mu_buy_day
-    )
-    {
+    function insert_keep_mouse ($mu_product_name, $mu_identify, $mu_produce_ym, $mu_gian_num, $mu_buy_day) {
         $sql = "INSERT INTO jeonsan_mouse (
         product_name, identify, produce_ym, gian_num, buy_day
         ) 
         VALUES (
-        '" . $mu_product_name . "',
-        '" . $mu_identify . "',
-        '" . $mu_produce_ym . "',
-        '" . $mu_gian_num . "',
-        '" . $mu_buy_day . "'
+        '".$mu_product_name."',
+        '".$mu_identify."',
+        '".$mu_produce_ym."',
+        '".$mu_gian_num."',
+        '".$mu_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function insert_keep_headset(
-        $h_product_name, $h_gian_num, $h_buy_day
-    )
-    {
+    function insert_keep_headset ($h_product_name, $h_gian_num, $h_buy_day) {
         $sql = "INSERT INTO jeonsan_headset (
         product_name, gian_num, buy_day
         ) 
         VALUES (
-        '" . $h_product_name . "',
-        '" . $h_gian_num . "',
-        '" . $h_buy_day . "'
+        '".$h_product_name."',
+        '".$h_gian_num."',
+        '".$h_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function insert_keep_cell(
-        $c_product_name, $c_gian_num, $c_buy_day
-    )
-    {
+    function insert_keep_cell ($c_product_name, $c_gian_num, $c_buy_day) {
         $sql = "INSERT INTO jeonsan_cell (
         product_name, gian_num, buy_day
         ) 
         VALUES (
-        '" . $c_product_name . "',
-        '" . $c_gian_num . "',
-        '" . $c_buy_day . "'
+        '".$c_product_name."',
+        '".$c_gian_num."',
+        '".$c_buy_day."'
         )";
         $query = $this->db->query($sql);
     }
 
-    function add_keep_pc($idx)
-    {
+    function add_keep_pc ($idx) {
         $sql = "INSERT INTO 
                 jeonsan_pc (idx,user_idx,company,model_name,model_code,produce_number,product_code,identify,produce_ym,g_cpu,g_ram,g_hdd_c,g_hdd_d,g_graphic,gian_num,buy_day) 
                 SELECT idx,user_idx,company,model_name,model_code,produce_number,product_code,identify,produce_ym,g_cpu,g_ram,g_hdd_c,g_hdd_d,g_graphic,gian_num,buy_day FROM 
@@ -1201,8 +1116,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function add_keep_moniter($idx)
-    {
+    function add_keep_moniter ($idx) {
         $sql = "INSERT INTO 
                 jeonsan_moniter (idx,user_idx,company,product_name, model_code, model_name,identify, produce_ym, soft_num, gian_num,buy_day) 
                 SELECT idx,user_idx,company,product_name, model_code, model_name,identify, produce_ym, soft_num, gian_num,buy_day FROM 
@@ -1213,8 +1127,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function add_keep_keyboard($idx)
-    {
+    function add_keep_keyboard ($idx) {
         $sql = "INSERT INTO jeonsan_keyboard (idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day) 
         SELECT idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day FROM
         g_keyboard WHERE idx=$idx";
@@ -1224,8 +1137,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function add_keep_mouse($idx)
-    {
+    function add_keep_mouse ($idx) {
         $sql = "INSERT INTO jeonsan_mouse (idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day) 
         SELECT idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day FROM
         g_mouse WHERE idx=$idx";
@@ -1235,8 +1147,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function add_keep_headset($idx)
-    {
+    function add_keep_headset ($idx) {
         $sql = "INSERT INTO jeonsan_headset (idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day) 
         SELECT idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day FROM
         g_headset WHERE idx=$idx";
@@ -1246,8 +1157,7 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function add_keep_cell($idx)
-    {
+    function add_keep_cell ($idx) {
         $sql = "INSERT INTO jeonsan_cell (idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day) 
         SELECT idx,user_idx,product_name,identify,produce_ym,gian_num,buy_day FROM
         g_cell WHERE idx=$idx";
@@ -1257,18 +1167,16 @@ class Group_model extends CI_Model
         return $result;
     }
 
-    function delete_keep_pc($j_idx)
-    {
-        $sql = "DELETE FROM jeonsan_pc WHERE j_idx = '" . $j_idx . "'";
+    function delete_keep_pc ($j_idx) {
+        $sql = "DELETE FROM jeonsan_pc WHERE j_idx = '".$j_idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_keep_moniter($j_idx)
-    {
-        $sql = "DELETE FROM jeonsan_moniter WHERE j_idx = '" . $j_idx . "'";
+    function delete_keep_moniter ($j_idx) {
+        $sql = "DELETE FROM jeonsan_moniter WHERE j_idx = '".$j_idx."'";
 
         $result = $this->db->query($sql);
 
@@ -1276,167 +1184,148 @@ class Group_model extends CI_Model
     }
 
 
-    function delete_keep_keyboard($j_idx)
-    {
-        $sql = "DELETE FROM jeonsan_keyboard WHERE j_idx = '" . $j_idx . "'";
+    function delete_keep_keyboard ($j_idx) {
+        $sql = "DELETE FROM jeonsan_keyboard WHERE j_idx = '".$j_idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_keep_mouse($j_idx)
-    {
-        $sql = "DELETE FROM jeonsan_mouse WHERE j_idx = '" . $j_idx . "'";
+    function delete_keep_mouse ($j_idx) {
+        $sql = "DELETE FROM jeonsan_mouse WHERE j_idx = '".$j_idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_keep_headset($j_idx)
-    {
-        $sql = "DELETE FROM jeonsan_headset WHERE j_idx = '" . $j_idx . "'";
+    function delete_keep_headset ($j_idx) {
+        $sql = "DELETE FROM jeonsan_headset WHERE j_idx = '".$j_idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_keep_cell($j_idx)
-    {
-        $sql = "DELETE FROM jeonsan_cell WHERE j_idx = '" . $j_idx . "'";
+    function delete_keep_cell ($j_idx) {
+        $sql = "DELETE FROM jeonsan_cell WHERE j_idx = '".$j_idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
-
 
 
     /*
      * 모니터 데이터 삭제 (g_view)
      */
-    function delete_part_moniter($idx)
-    {
-        $sql = "DELETE FROM g_moniter WHERE idx = '" . $idx . "'";
+    function delete_part_moniter ($idx) {
+        $sql = "DELETE FROM g_moniter WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_pc($idx)
-    {
-        $sql = "DELETE FROM g_pc WHERE idx = '" . $idx . "'";
+    function delete_part_pc ($idx) {
+        $sql = "DELETE FROM g_pc WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_keyboard($idx)
-    {
-        $sql = "DELETE FROM g_keyboard WHERE idx = '" . $idx . "'";
+    function delete_part_keyboard ($idx) {
+        $sql = "DELETE FROM g_keyboard WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_mouse($idx)
-    {
-        $sql = "DELETE FROM g_mouse WHERE idx = '" . $idx . "'";
+    function delete_part_mouse ($idx) {
+        $sql = "DELETE FROM g_mouse WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_headset($idx)
-    {
-        $sql = "DELETE FROM g_headset WHERE idx = '" . $idx . "'";
+    function delete_part_headset ($idx) {
+        $sql = "DELETE FROM g_headset WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_cell($idx)
-    {
-        $sql = "DELETE FROM g_cell WHERE idx = '" . $idx . "'";
+    function delete_part_cell ($idx) {
+        $sql = "DELETE FROM g_cell WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_window($idx)
-    {
-        $sql = "DELETE FROM g_window WHERE idx = '" . $idx . "'";
+    function delete_part_window ($idx) {
+        $sql = "DELETE FROM g_window WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_ms($idx)
-    {
-        $sql = "DELETE FROM g_ms WHERE idx = '" . $idx . "'";
+    function delete_part_ms ($idx) {
+        $sql = "DELETE FROM g_ms WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_hangul($idx)
-    {
-        $sql = "DELETE FROM g_hangul WHERE idx = '" . $idx . "'";
+    function delete_part_hangul ($idx) {
+        $sql = "DELETE FROM g_hangul WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_security($idx)
-    {
-        $sql = "DELETE FROM g_security WHERE idx = '" . $idx . "'";
+    function delete_part_security ($idx) {
+        $sql = "DELETE FROM g_security WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_quark($idx)
-    {
-        $sql = "DELETE FROM g_quark WHERE idx = '" . $idx . "'";
+    function delete_part_quark ($idx) {
+        $sql = "DELETE FROM g_quark WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_adobe($idx)
-    {
-        $sql = "DELETE FROM g_adobe WHERE idx = '" . $idx . "'";
+    function delete_part_adobe ($idx) {
+        $sql = "DELETE FROM g_adobe WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_font($idx)
-    {
-        $sql = "DELETE FROM g_font WHERE idx = '" . $idx . "'";
+    function delete_part_font ($idx) {
+        $sql = "DELETE FROM g_font WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    function delete_part_compress($idx)
-    {
-        $sql = "DELETE FROM g_compress WHERE idx = '" . $idx . "'";
+    function delete_part_compress ($idx) {
+        $sql = "DELETE FROM g_compress WHERE idx = '".$idx."'";
 
         $result = $this->db->query($sql);
 

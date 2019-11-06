@@ -6,11 +6,13 @@
             <div class="col-lg-12">
                 <h3 class="page-header"><i class="fa fa-laptop"></i>전산기록부</h3>
                 <button class="btn btn-success btn-sm" onclick="history.back();">그룹목록으로</button>
-                <a class="btn btn-warning btn-sm" href="/group/excel_print/<?php echo $this->uri->segment(3); ?>"> 엑셀 출력</a>
+                <a class="btn btn-warning btn-sm" href="/group/excel_print/<?php echo $this->uri->segment(3); ?>"> 엑셀
+                    출력</a>
                 <?php
                 if ($this->session->userdata('user_level') == '1') {
                     ?>
-                    <a class="btn btn-primary btn-sm" href="/group/g_add_option/<?php echo $this->uri->segment(3); ?>"> 전산항목 추가</a>
+                    <a class="btn btn-primary btn-sm" href="/group/g_add_option/<?php echo $this->uri->segment(3); ?>">
+                        전산항목 추가</a>
                     <a href="/group/g_user_delete/<?php echo $this->uri->segment(3); ?>"
                        class="btn btn-danger btn-sm">그룹원 삭제 </a>
                     <?php
@@ -53,21 +55,21 @@
                                                         <a class="bold">모니터</a>
                                                         <table class="table table-striped table-advance table-hover">
                                                             <tbody>
-                                                                <tr>
-                                                                    <th width="15%">기능</th>
-                                                                    <th>제조사</th>
-                                                                    <th>제품명</th>
-                                                                    <th>모델코드</th>
-                                                                    <th>모델명</th>
-                                                                    <th>식별부호</th>
-                                                                    <th>제조년월</th>
-                                                                    <th>S/N</th>
-                                                                    <th>기안문서번호</th>
-                                                                    <th>구매일</th>
-                                                                </tr>
-                                                                <?php
-                                                                foreach ($view_moniter as $lt) {
-                                                                    ?>
+                                                            <tr>
+                                                                <th width="15%">기능</th>
+                                                                <th>제조사</th>
+                                                                <th>제품명</th>
+                                                                <th>모델코드</th>
+                                                                <th>모델명</th>
+                                                                <th>식별부호</th>
+                                                                <th>제조년월</th>
+                                                                <th>S/N</th>
+                                                                <th>기안문서번호</th>
+                                                                <th>구매일</th>
+                                                            </tr>
+                                                            <?php
+                                                            foreach ($view['moniter'] as $k => $v) {
+                                                                ?>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="btn-group">
@@ -75,25 +77,25 @@
                                                                             if ($this->session->userdata('user_level') == '1') {
                                                                                 ?>
                                                                                 <a class="btn btn-success"
-                                                                                   href="/group/jeonsan_keep_moniter/<?php echo $lt->idx; ?>">보관</a>
+                                                                                   href="/group/jeonsan_keep_moniter/<?php echo $v['idx']; ?>">보관</a>
                                                                                 <a class="btn btn-primary"
-                                                                                   href="/group/g_moniter/<?php echo $lt->idx; ?>">수정</a>
+                                                                                   href="/group/g_moniter/<?php echo $v['idx']; ?>">수정</a>
                                                                                 <a class="btn btn-danger"
-                                                                                   href="/group/part_moniter_delete/<?php echo $lt->idx; ?>">삭제</a>
+                                                                                   href="/group/part_moniter_delete/<?php echo $v['idx']; ?>">삭제</a>
                                                                                 <?php
                                                                             }
                                                                             ?>
                                                                         </div>
                                                                     </td>
-                                                                    <td><?php echo $lt->company; ?></td>
-                                                                    <td><?php echo $lt->product_name; ?></td>
-                                                                    <td><?php echo $lt->model_code; ?></td>
-                                                                    <td><?php echo $lt->model_name; ?></td>
-                                                                    <td><?php echo $lt->identify; ?></td>
-                                                                    <td><?php echo $lt->produce_ym; ?></td>
-                                                                    <td><?php echo $lt->soft_num; ?></td>
-                                                                    <td><?php echo $lt->gian_num; ?></td>
-                                                                    <td><?php echo $lt->buy_day; ?></td>
+                                                                    <td><?php echo $v['company']; ?></td>
+                                                                    <td><?php echo $v['product_name']; ?></td>
+                                                                    <td><?php echo $v['model_code']; ?></td>
+                                                                    <td><?php echo $v['model_name']; ?></td>
+                                                                    <td><?php echo $v['identify']; ?></td>
+                                                                    <td><?php echo $v['produce_ym']; ?></td>
+                                                                    <td><?php echo $v['soft_num']; ?></td>
+                                                                    <td><?php echo $v['gian_num']; ?></td>
+                                                                    <td><?php echo $v['buy_day']; ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -105,19 +107,21 @@
                                                         <a class="Bold">본체</a>
                                                         <table class="table table-striped table-advance table-hover">
                                                             <tbody>
+                                                            <tr>
+                                                                <th width="15%">기능</th>
+                                                                <th>제조사</th>
+                                                                <th>제품명</th>
+                                                                <th>모델코드</th>
+                                                                <th>모델명</th>
+                                                                <th>식별부호</th>
+                                                                <th>제조년월</th>
+                                                                <th>S/N</th>
+                                                                <th>기안문서번호</th>
+                                                                <th>구매일</th>
+                                                            </tr>
                                                             <?php
-                                                            foreach ($view_pc as $lt) {
+                                                            foreach ($view['pc'] as $k => $v) {
                                                                 ?>
-                                                                <tr>
-                                                                    <th width="15%">기능</th>
-                                                                    <th>제조사</th>
-                                                                    <th>모델명</th>
-                                                                    <th>모델코드</th>
-                                                                    <th>제조번호</th>
-                                                                    <th>제품코드</th>
-                                                                    <th>식별부호</th>
-                                                                    <th>제조년월</th>
-                                                                </tr>
                                                                 <tr>
                                                                     <td>
                                                                         <div class="btn-group">
@@ -125,43 +129,25 @@
                                                                             if ($this->session->userdata('user_level') == '1') {
                                                                                 ?>
                                                                                 <a class="btn btn-success"
-                                                                                   href="/group/jeonsan_keep_pc/<?php echo $lt->idx; ?>">보관</a>
+                                                                                   href="/group/jeonsan_keep_moniter/<?php echo $v['idx']; ?>">보관</a>
                                                                                 <a class="btn btn-primary"
-                                                                                   href="/group/g_pc/<?php echo $lt->idx; ?>">수정</a>
+                                                                                   href="/group/g_moniter/<?php echo $v['idx']; ?>">수정</a>
                                                                                 <a class="btn btn-danger"
-                                                                                   href="/group/part_pc_delete/<?php echo $lt->idx; ?>">삭제</a>
+                                                                                   href="/group/part_moniter_delete/<?php echo $v['idx']; ?>">삭제</a>
                                                                                 <?php
                                                                             }
                                                                             ?>
                                                                         </div>
                                                                     </td>
-                                                                    <td><?php echo $lt->company; ?></td>
-                                                                    <td><?php echo $lt->model_name; ?></td>
-                                                                    <td><?php echo $lt->model_code; ?></td>
-                                                                    <td><?php echo $lt->produce_number; ?></td>
-                                                                    <td><?php echo $lt->product_code; ?></td>
-                                                                    <td><?php echo $lt->identify; ?></td>
-                                                                    <td><?php echo $lt->produce_ym; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th></th>
-                                                                    <th>CPU</th>
-                                                                    <th>RAM</th>
-                                                                    <th>HDD(C:)</th>
-                                                                    <th>HDD(D:)</th>
-                                                                    <th>그래픽카드</th>
-                                                                    <th>기안문서번호</th>
-                                                                    <th>구매일</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td><?php echo $lt->g_cpu; ?></td>
-                                                                    <td><?php echo $lt->g_ram; ?></td>
-                                                                    <td><?php echo $lt->g_hdd_c; ?></td>
-                                                                    <td><?php echo $lt->g_hdd_d; ?></td>
-                                                                    <td><?php echo $lt->g_graphic; ?></td>
-                                                                    <td><?php echo $lt->gian_num; ?></td>
-                                                                    <td><?php echo $lt->buy_day; ?></td>
+                                                                    <td><?php echo $v['company']; ?></td>
+                                                                    <td><?php echo $v['product_name']; ?></td>
+                                                                    <td><?php echo $v['model_code']; ?></td>
+                                                                    <td><?php echo $v['model_name']; ?></td>
+                                                                    <td><?php echo $v['identify']; ?></td>
+                                                                    <td><?php echo $v['produce_ym']; ?></td>
+                                                                    <td><?php echo $v['soft_num']; ?></td>
+                                                                    <td><?php echo $v['gian_num']; ?></td>
+                                                                    <td><?php echo $v['buy_day']; ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -182,35 +168,34 @@
                                                                 <th>구매일</th>
                                                             </tr>
                                                             <?php
-                                                            foreach ($view_keyboard as $lt) {
+                                                            foreach ($view['keyboard'] as $k => $v) {
                                                                 ?>
                                                                 <tr>
                                                                     <td>
-                                                                        <?php if (($lt->product_name) != '') {
-                                                                            ?>
-                                                                            <div class="btn-group">
-                                                                                <?php
-                                                                                if ($this->session->userdata('user_level') == '1') {
-                                                                                    ?>
-                                                                                    <a class="btn btn-success"
-                                                                                       href="/group/jeonsan_keep_keyboard/<?php echo $lt->idx; ?>">보관</a>
-                                                                                    <a class="btn btn-primary"
-                                                                                       href="/group/g_keyboard/<?php echo $lt->idx; ?>">수정</a>
-                                                                                    <a class="btn btn-danger"
-                                                                                       href="/group/part_keyboard_delete/<?php echo $lt->idx; ?>">삭제</a>
-                                                                                    <?php
-                                                                                }
-                                                                                ?>
-                                                                            </div>
+                                                                        <div class="btn-group">
                                                                             <?php
-                                                                        }
-                                                                        ?>
+                                                                            if ($this->session->userdata('user_level') == '1') {
+                                                                                ?>
+                                                                                <a class="btn btn-success"
+                                                                                   href="/group/jeonsan_keep_moniter/<?php echo $v['idx']; ?>">보관</a>
+                                                                                <a class="btn btn-primary"
+                                                                                   href="/group/g_moniter/<?php echo $v['idx']; ?>">수정</a>
+                                                                                <a class="btn btn-danger"
+                                                                                   href="/group/part_moniter_delete/<?php echo $v['idx']; ?>">삭제</a>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                        </div>
                                                                     </td>
-                                                                    <td><?php echo $lt->product_name; ?></td>
-                                                                    <td><?php echo $lt->identify; ?></td>
-                                                                    <td><?php echo $lt->produce_ym; ?></td>
-                                                                    <td><?php echo $lt->gian_num; ?></td>
-                                                                    <td><?php echo $lt->buy_day; ?></td>
+                                                                    <td><?php echo $v['company']; ?></td>
+                                                                    <td><?php echo $v['product_name']; ?></td>
+                                                                    <td><?php echo $v['model_code']; ?></td>
+                                                                    <td><?php echo $v['model_name']; ?></td>
+                                                                    <td><?php echo $v['identify']; ?></td>
+                                                                    <td><?php echo $v['produce_ym']; ?></td>
+                                                                    <td><?php echo $v['soft_num']; ?></td>
+                                                                    <td><?php echo $v['gian_num']; ?></td>
+                                                                    <td><?php echo $v['buy_day']; ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -231,35 +216,34 @@
                                                                 <th>구매일</th>
                                                             </tr>
                                                             <?php
-                                                            foreach ($view_mouse as $lt) {
+                                                            foreach ($view['mouse'] as $k => $v) {
                                                                 ?>
                                                                 <tr>
                                                                     <td>
-                                                                        <?php if (($lt->product_name) != '') {
-                                                                            ?>
-                                                                            <div class="btn-group">
-                                                                                <?php
-                                                                                if ($this->session->userdata('user_level') == '1') {
-                                                                                    ?>
-                                                                                    <a class="btn btn-success"
-                                                                                       href="/group/jeonsan_keep_mouse/<?php echo $lt->idx; ?>">보관</a>
-                                                                                    <a class="btn btn-primary"
-                                                                                       href="/group/g_mouse/<?php echo $lt->idx; ?>">수정</a>
-                                                                                    <a class="btn btn-danger"
-                                                                                       href="/group/part_mouse_delete/<?php echo $lt->idx; ?>">삭제</a>
-                                                                                    <?php
-                                                                                }
-                                                                                ?>
-                                                                            </div>
+                                                                        <div class="btn-group">
                                                                             <?php
-                                                                        }
-                                                                        ?>
+                                                                            if ($this->session->userdata('user_level') == '1') {
+                                                                                ?>
+                                                                                <a class="btn btn-success"
+                                                                                   href="/group/jeonsan_keep_moniter/<?php echo $v['idx']; ?>">보관</a>
+                                                                                <a class="btn btn-primary"
+                                                                                   href="/group/g_moniter/<?php echo $v['idx']; ?>">수정</a>
+                                                                                <a class="btn btn-danger"
+                                                                                   href="/group/part_moniter_delete/<?php echo $v['idx']; ?>">삭제</a>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                        </div>
                                                                     </td>
-                                                                    <td><?php echo $lt->product_name; ?></td>
-                                                                    <td><?php echo $lt->identify; ?></td>
-                                                                    <td><?php echo $lt->produce_ym; ?></td>
-                                                                    <td><?php echo $lt->gian_num; ?></td>
-                                                                    <td><?php echo $lt->buy_day; ?></td>
+                                                                    <td><?php echo $v['company']; ?></td>
+                                                                    <td><?php echo $v['product_name']; ?></td>
+                                                                    <td><?php echo $v['model_code']; ?></td>
+                                                                    <td><?php echo $v['model_name']; ?></td>
+                                                                    <td><?php echo $v['identify']; ?></td>
+                                                                    <td><?php echo $v['produce_ym']; ?></td>
+                                                                    <td><?php echo $v['soft_num']; ?></td>
+                                                                    <td><?php echo $v['gian_num']; ?></td>
+                                                                    <td><?php echo $v['buy_day']; ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -278,33 +262,34 @@
                                                                 <th width="30%">구매일</th>
                                                             </tr>
                                                             <?php
-                                                            foreach ($view_headset as $lt) {
+                                                            foreach ($view['headset'] as $k => $v) {
                                                                 ?>
                                                                 <tr>
                                                                     <td>
-                                                                        <?php if (($lt->product_name) != '') {
-                                                                            ?>
-                                                                            <div class="btn-group">
-                                                                                <?php
-                                                                                if ($this->session->userdata('user_level') == '1') {
-                                                                                    ?>
-                                                                                    <a class="btn btn-success"
-                                                                                       href="/group/jeonsan_keep_headset/<?php echo $lt->idx; ?>">보관</a>
-                                                                                    <a class="btn btn-primary"
-                                                                                       href="/group/g_headset/<?php echo $lt->idx; ?>">수정</a>
-                                                                                    <a class="btn btn-danger"
-                                                                                       href="/group/part_headset_delete/<?php echo $lt->idx; ?>">삭제</a>
-                                                                                    <?php
-                                                                                }
-                                                                                ?>
-                                                                            </div>
+                                                                        <div class="btn-group">
                                                                             <?php
-                                                                        }
-                                                                        ?>
+                                                                            if ($this->session->userdata('user_level') == '1') {
+                                                                                ?>
+                                                                                <a class="btn btn-success"
+                                                                                   href="/group/jeonsan_keep_moniter/<?php echo $v['idx']; ?>">보관</a>
+                                                                                <a class="btn btn-primary"
+                                                                                   href="/group/g_moniter/<?php echo $v['idx']; ?>">수정</a>
+                                                                                <a class="btn btn-danger"
+                                                                                   href="/group/part_moniter_delete/<?php echo $v['idx']; ?>">삭제</a>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                        </div>
                                                                     </td>
-                                                                    <td><?php echo $lt->product_name; ?></td>
-                                                                    <td><?php echo $lt->gian_num; ?></td>
-                                                                    <td><?php echo $lt->buy_day; ?></td>
+                                                                    <td><?php echo $v['company']; ?></td>
+                                                                    <td><?php echo $v['product_name']; ?></td>
+                                                                    <td><?php echo $v['model_code']; ?></td>
+                                                                    <td><?php echo $v['model_name']; ?></td>
+                                                                    <td><?php echo $v['identify']; ?></td>
+                                                                    <td><?php echo $v['produce_ym']; ?></td>
+                                                                    <td><?php echo $v['soft_num']; ?></td>
+                                                                    <td><?php echo $v['gian_num']; ?></td>
+                                                                    <td><?php echo $v['buy_day']; ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -323,7 +308,7 @@
                                                                 <th width="30%">구매일</th>
                                                             </tr>
                                                             <?php
-                                                            foreach ($view_cell as $lt) {
+                                                            foreach ($view['cell'] as $k => $v) {
                                                                 ?>
                                                                 <tr>
                                                                     <td>
@@ -332,19 +317,25 @@
                                                                             if ($this->session->userdata('user_level') == '1') {
                                                                                 ?>
                                                                                 <a class="btn btn-success"
-                                                                                   href="/group/jeonsan_keep_cell/<?php echo $lt->idx; ?>">보관</a>
+                                                                                   href="/group/jeonsan_keep_moniter/<?php echo $v['idx']; ?>">보관</a>
                                                                                 <a class="btn btn-primary"
-                                                                                   href="/group/g_cell/<?php echo $lt->idx; ?>">수정</a>
+                                                                                   href="/group/g_moniter/<?php echo $v['idx']; ?>">수정</a>
                                                                                 <a class="btn btn-danger"
-                                                                                   href="/group/part_cell_delete/<?php echo $lt->idx; ?>">삭제</a>
+                                                                                   href="/group/part_moniter_delete/<?php echo $v['idx']; ?>">삭제</a>
                                                                                 <?php
                                                                             }
                                                                             ?>
                                                                         </div>
                                                                     </td>
-                                                                    <td><?php echo $lt->product_name; ?></td>
-                                                                    <td><?php echo $lt->gian_num; ?></td>
-                                                                    <td><?php echo $lt->buy_day; ?></td>
+                                                                    <td><?php echo $v['company']; ?></td>
+                                                                    <td><?php echo $v['product_name']; ?></td>
+                                                                    <td><?php echo $v['model_code']; ?></td>
+                                                                    <td><?php echo $v['model_name']; ?></td>
+                                                                    <td><?php echo $v['identify']; ?></td>
+                                                                    <td><?php echo $v['produce_ym']; ?></td>
+                                                                    <td><?php echo $v['soft_num']; ?></td>
+                                                                    <td><?php echo $v['gian_num']; ?></td>
+                                                                    <td><?php echo $v['buy_day']; ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -382,9 +373,9 @@
                                                                 <th>사용기간</th>
                                                             </tr>
                                                             <tr>
-                                                                <?php
-                                                                foreach ($view_window as $lt) {
-                                                                ?>
+                                                                <?php foreach ($view_window
+
+                                                                as $lt) { ?>
                                                                 <td>
                                                                     <?php if (($lt->product_number) != '') {
                                                                         ?>
@@ -426,7 +417,9 @@
                                                             </tr>
                                                             <tr>
                                                                 <?php
-                                                                foreach ($view_ms as $lt) {
+                                                                foreach ($view_ms
+
+                                                                as $lt) {
                                                                 ?>
                                                                 <td>
                                                                     <?php if (($lt->product_number) != '') {
@@ -469,7 +462,9 @@
                                                             </tr>
                                                             <tr>
                                                                 <?php
-                                                                foreach ($view_hangul as $lt) {
+                                                                foreach ($view_hangul
+
+                                                                as $lt) {
                                                                 ?>
                                                                 <td>
                                                                     <?php if (($lt->product_number) != '') {
@@ -512,7 +507,9 @@
                                                             </tr>
                                                             <tr>
                                                                 <?php
-                                                                foreach ($view_security as $lt) {
+                                                                foreach ($view_security
+
+                                                                as $lt) {
                                                                 ?>
                                                                 <td>
                                                                     <?php if (($lt->product_number) != '') {
@@ -556,7 +553,9 @@
                                                             </tr>
                                                             <tr>
                                                                 <?php
-                                                                foreach ($view_quark as $lt) {
+                                                                foreach ($view_quark
+
+                                                                as $lt) {
                                                                 ?>
                                                                 <td>
                                                                     <?php if (($lt->product_number) != '') {
@@ -601,7 +600,9 @@
                                                             </tr>
                                                             <tr>
                                                                 <?php
-                                                                foreach ($view_adobe as $lt) {
+                                                                foreach ($view_adobe
+
+                                                                as $lt) {
                                                                 ?>
                                                                 <td>
                                                                     <?php if (($lt->adobe_product) != '') {
@@ -648,10 +649,12 @@
                                                             </tr>
                                                             <tr>
                                                                 <?php
-                                                                foreach ($view_font as $lt) {
+                                                                foreach ($view_font
+
+                                                                as $lt) {
                                                                 ?>
                                                                 <td>
-                                                                    <?php if (($lt->asia)||($lt->mukhyang) != '') {
+                                                                    <?php if (($lt->asia) || ($lt->mukhyang) != '') {
                                                                         ?>
                                                                         <div class="btn-group">
                                                                             <?php
@@ -694,7 +697,9 @@
                                                             </tr>
                                                             <tr>
                                                                 <?php
-                                                                foreach ($view_compress as $lt) {
+                                                                foreach ($view_compress
+
+                                                                as $lt) {
                                                                 ?>
                                                                 <td>
                                                                     <?php if (($lt->alzip) != '') {

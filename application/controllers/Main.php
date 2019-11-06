@@ -31,7 +31,6 @@ class Main extends CI_Controller
 	public function index()
 	{
 		$data= array();
-		//$data['views'] = $this->main_model->get_count();
 
 		$counter = $this->main_model->get_count();
 		$data['counter'] = $counter;

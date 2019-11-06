@@ -15,164 +15,97 @@ class Main_model extends CI_Model
     function get_count()
     {
         $dash_count = array();
-        $sql="";
-        
-        // 소프트웨어(진행) 건수
-        $sql = "SELECT count(*) as cnt FROM soft_progress";
-        //$query=$this->db->query($sql);
-        //$result = $query->row();
-        //return $result;
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["soft_progress" => $result[0]['cnt']];
 
-        // 소프트웨어(보관) 건수
-        $sql = "SELECT count(*) as cnt FROM soft_keep";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["soft_keep" => $result[0]['cnt']];
-
-        // 소프트웨어(사용불가) 건수
-        $sql = "SELECT count(*) as cnt FROM soft_stop";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["soft_stop" => $result[0]['cnt']];
+        $sql = "SELECT 
+                COUNT(if(state='Y', state, NULL)) AS progress,
+                COUNT(if(state='N', state, NULL)) AS stop,
+                COUNT(if(state='R', state, NULL)) AS keep 
+                FROM soft_all";
+        $result = $this->db->query($sql)->row_array();
+        $dash_count["soft_progress"] = $result['progress'];
+        $dash_count["soft_keep"] = $result['keep'];
+        $dash_count["soft_stop"] = $result['stop'];
 
         // 카스퍼스키 건수
         $sql = "SELECT count(*) as cnt FROM kaspersky";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["kaspersky" => $result[0]['cnt']];
+        $result = $this->db->query($sql)->row_array();
+        $dash_count["kaspersky"] = $result['cnt'];
 
         // 프린터 건수
         $sql = "SELECT count(*) as cnt FROM printer";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["printer" => $result[0]['cnt']];
-
-        // xp 업/다운그레이드 건수
-        $sql = "SELECT count(*) as cnt FROM xp_down";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["xp_down" => $result[0]['cnt']];
-
-        // ms-office 건수
-        $sql = "SELECT count(*) as cnt FROM ms_up";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["ms_up" => $result[0]['cnt']];
-
-        // quark 건수
-        $sql = "SELECT count(*) as cnt FROM quark_up";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["quark_up" => $result[0]['cnt']];
-
-        // 아시아폰트 건수
-        $sql = "SELECT count(*) as cnt FROM asiafont_up";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["asiafont_up" => $result[0]['cnt']];
+        $result = $this->db->query($sql)->row_array();
+        $dash_count["printer"] = $result['cnt'];
         
         ## 전산등록인원 ##
         //전체
-        $sql = "SELECT count(*) as cnt FROM g_gs";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_total" => $result[0]['cnt']];
-        //경영지원본부
-        $sql = "SELECT count(*) as cnt FROM g_gs WHERE group_key='gs'";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_gs" => $result[0]['cnt']];
-
-        $sql = "SELECT count(*) as cnt FROM g_gs WHERE group_key='ad1'";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_ad1" => $result[0]['cnt']];
-
-        $sql = "SELECT count(*) as cnt FROM g_gs WHERE group_key='ad2'";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_ad2" => $result[0]['cnt']];
-
-        $sql = "SELECT count(*) as cnt FROM g_gs WHERE group_key='em_edit'";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_em_edit" => $result[0]['cnt']];
-
-        $sql = "SELECT count(*) as cnt FROM g_gs WHERE group_key='tv'";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_tv" => $result[0]['cnt']];
+        $sql = "
+                SELECT 
+                COUNT(group_key) AS total,
+                COUNT(if(group_key='gs', group_key, NULL)) AS gs,
+                COUNT(if(group_key='ad1', group_key, NULL)) AS ad1,
+                COUNT(if(group_key='ad2', group_key, NULL)) AS ad2, 
+                COUNT(if(group_key='em_edit', group_key, NULL)) AS em_edit,
+                COUNT(if(group_key='tv', group_key, NULL)) AS tv
+                FROM g_gs
+                ";
+        $result = $this->db->query($sql)->row_array();
+        $dash_count["g_total"] = $result['total'];
+        $dash_count["g_gs"] = $result['gs'];
+        $dash_count["g_ad1"] = $result['ad1'];
+        $dash_count["g_ad2"] = $result['ad2'];
+        $dash_count["g_em_edit"] = $result['em_edit'];
+        $dash_count["g_tv"] = $result['tv'];
 
         ## PC 사용현황 ##
-        //모니터
-        $sql = "SELECT count(*) as cnt FROM g_moniter";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_moniter" => $result[0]['cnt']];
-        //본체
-        $sql = "SELECT count(*) as cnt FROM g_pc";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_pc" => $result[0]['cnt']];
-        //키보드
-        $sql = "SELECT count(*) as cnt FROM g_keyboard";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_keyboard" => $result[0]['cnt']];
-        //마우스
-        $sql = "SELECT count(*) as cnt FROM g_mouse";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_mouse" => $result[0]['cnt']];
-        //헤드셋
-        $sql = "SELECT count(*) as cnt FROM g_headset";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_headset" => $result[0]['cnt']];
-        //전화기
-        $sql = "SELECT count(*) as cnt FROM g_cell";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["g_cell" => $result[0]['cnt']];
+        $sql = "
+                SELECT 
+                COUNT(if(type='moniter', type, NULL)) AS moniter,
+                COUNT(if(type='pc', type, NULL)) AS pc,
+                COUNT(if(type='keyboard', type, NULL)) AS keyboard,
+                COUNT(if(type='mouse', type, NULL)) AS mouse, 
+                COUNT(if(type='headset', type, NULL)) AS headset,
+                COUNT(if(type='cell', type, NULL)) AS cell
+                FROM g_system
+                ";
+        $result = $this->db->query($sql)->row_array();
+        $dash_count["g_moniter"] = $result['moniter'];
+        $dash_count["g_pc"] = $result['pc'];
+        $dash_count["g_keyboard"] = $result['keyboard'];
+        $dash_count["g_mouse"] = $result['mouse'];
+        $dash_count["g_headset"] = $result['headset'];
+        $dash_count["g_cell"] = $result['cell'];
 
         ## 전산 소프트웨어 현재사용내역 ##
-        // WINDOW 사용내역
-        $sql = "SELECT count(*) AS cnt FROM g_window";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["win" => $result[0]['cnt']];
-
-        // MS-OFFICE 사용내역
-        $sql = "SELECT count(*) AS cnt FROM g_ms";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["ms" => $result[0]['cnt']];
-
-        // 한글제품 사용내역
-        $sql = "SELECT count(*) AS cnt FROM g_hangul";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["hangul" => $result[0]['cnt']];
-
-        // QUARK(쿽) 사용내역
-        $sql = "SELECT count(*) AS cnt FROM g_quark";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["quark" => $result[0]['cnt']];
-
-        // Adobe(어도비) 사용내역
-        $sql = "SELECT count(*) AS cnt FROM g_adobe";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["adobe" => $result[0]['cnt']];
-
-        // FONT(폰트) 사용내역
-        $sql = "SELECT count(*) AS cnt FROM g_font";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["font" => $result[0]['cnt']];
+        $sql = "
+                SELECT 
+                COUNT(if(type='window', type, NULL)) AS window,
+                COUNT(if(type='ms', type, NULL)) AS ms,
+                COUNT(if(type='hangul', type, NULL)) AS hangul
+                FROM g_software
+                ";
+        $result = $this->db->query($sql)->row_array();
+        $dash_count["window"] = $result['window'];
+        $dash_count["ms"] = $result['ms'];
+        $dash_count["hangul"] = $result['hangul'];
 
         ## 전산실 보관 ##
-        //모니터
-        $sql = "SELECT count(*) as cnt FROM jeonsan_moniter";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["jeonsan_moniter" => $result[0]['cnt']];
-        //본체
-        $sql = "SELECT count(*) as cnt FROM jeonsan_pc";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["jeonsan_pc" => $result[0]['cnt']];
-        //키보드
-        $sql = "SELECT count(*) as cnt FROM jeonsan_keyboard";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["jeonsan_keyboard" => $result[0]['cnt']];
-        //마우스
-        $sql = "SELECT count(*) as cnt FROM jeonsan_mouse";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["jeonsan_mouse" => $result[0]['cnt']];
-        //헤드셋
-        $sql = "SELECT count(*) as cnt FROM jeonsan_headset";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["jeonsan_headset" => $result[0]['cnt']];
-        //전화기
-        $sql = "SELECT count(*) as cnt FROM jeonsan_cell";
-        $result = $this->db->query($sql)->result_array();
-        $dash_count += ["jeonsan_cell" => $result[0]['cnt']];
+        $sql = "
+                SELECT 
+                COUNT(if(type='moniter', type, NULL)) AS moniter,
+                COUNT(if(type='pc', type, NULL)) AS pc,
+                COUNT(if(type='keyboard', type, NULL)) AS keyboard,
+                COUNT(if(type='mouse', type, NULL)) AS mouse, 
+                COUNT(if(type='headset', type, NULL)) AS headset,
+                COUNT(if(type='cell', type, NULL)) AS cell
+                FROM jeonsan
+                ";
+        $result = $this->db->query($sql)->row_array();
+        $dash_count["j_moniter"] = $result['moniter'];
+        $dash_count["j_pc"] = $result['pc'];
+        $dash_count["j_keyboard"] = $result['keyboard'];
+        $dash_count["j_mouse"] = $result['mouse'];
+        $dash_count["j_headset"] = $result['headset'];
+        $dash_count["j_cell"] = $result['cell'];
         
         return $dash_count;
         

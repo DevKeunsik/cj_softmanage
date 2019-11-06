@@ -64,27 +64,27 @@
                             </tr>
                             <tr>
                                 <td>모니터</td>
-                                <td><?php echo $counter['jeonsan_moniter']; ?></td>
+                                <td><?php echo $counter['j_moniter']; ?></td>
                             </tr>
                             <tr>
                                 <td>본체</td>
-                                <td><?php echo $counter['jeonsan_pc']; ?></td>
+                                <td><?php echo $counter['j_pc']; ?></td>
                             </tr>
                             <tr>
                                 <td>키보드</td>
-                                <td><?php echo $counter['jeonsan_keyboard']; ?></td>
+                                <td><?php echo $counter['j_keyboard']; ?></td>
                             </tr>
                             <tr>
                                 <td>마우스</td>
-                                <td><?php echo $counter['jeonsan_mouse']; ?></td>
+                                <td><?php echo $counter['j_mouse']; ?></td>
                             </tr>
                             <tr>
                                 <td>헤드셋</td>
-                                <td><?php echo $counter['jeonsan_headset']; ?></td>
+                                <td><?php echo $counter['j_headset']; ?></td>
                             </tr>
                             <tr>
                                 <td>전화기</td>
-                                <td><?php echo $counter['jeonsan_cell']; ?></td>
+                                <td><?php echo $counter['j_cell']; ?></td>
                             </tr>
                         </table>
                     </div>
@@ -155,7 +155,7 @@
                             <tbody>
                             <tr>
                                 <td><b>Window</b></td>
-                                <td><?php echo $counter['win']; ?></td>
+                                <td><?php echo $counter['window']; ?></td>
                                 <td><a class="btn btn-primary btn-sm" href="/soft/use_window/">자세히 보기</a></td>
                             </tr>
                             <tr>
@@ -167,21 +167,6 @@
                                 <td><b>한글제품</b></td>
                                 <td><?php echo $counter['hangul']; ?></td>
                                 <td><a class="btn btn-primary btn-sm" href="/soft/use_hangul/">자세히 보기</a></td>
-                            </tr>
-                            <tr>
-                                <td><b>Quark</b></td>
-                                <td><?php echo $counter['quark']; ?></td>
-                                <td><a class="btn btn-primary btn-sm" href="/soft/use_quark">자세히 보기</a></td>
-                            </tr>
-                            <tr>
-                                <td><b>Adobe</b></td>
-                                <td><?php echo $counter['adobe']; ?></td>
-                                <td><a class="btn btn-primary btn-sm" href="/soft/use_adobe">자세히 보기</a></td>
-                            </tr>
-                            <tr>
-                                <td><b>폰트</b></td>
-                                <td><?php echo $counter['font']; ?></td>
-                                <td><a class="btn btn-primary btn-sm" href="/soft/use_font">자세히 보기</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -215,7 +200,7 @@
                                 <td><?php echo $counter['soft_progress']; ?></td>
                                 <td>
                                     <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
+                                    if ($this->session->userdata('user_level') == '1') {
                                         ?>
                                         <a class="btn btn-primary btn-sm" href="/soft/write_progress/">신규 등록</a>
                                         <?php
@@ -231,7 +216,7 @@
                                 <td><?php echo $counter['soft_keep']; ?></td>
                                 <td>
                                     <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
+                                    if ($this->session->userdata('user_level') == '1') {
                                         ?>
                                         <a class="btn btn-primary btn-sm" href="/soft/wirte_keep/">신규 등록</a>
                                         <?php
@@ -247,7 +232,7 @@
                                 <td><?php echo $counter['soft_stop']; ?></td>
                                 <td>
                                     <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
+                                    if ($this->session->userdata('user_level') == '1') {
                                         ?>
                                         <a class="btn btn-primary btn-sm" href="/soft/write_stop/">신규 등록</a>
                                         <?php
@@ -263,7 +248,7 @@
                                 <td><?php echo $counter['kaspersky']; ?></td>
                                 <td>
                                     <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
+                                    if ($this->session->userdata('user_level') == '1') {
                                         ?>
                                         <a class="btn btn-primary btn-sm" href="/soft/write_kaspersky/">신규 등록</a>
                                         <?php
@@ -279,77 +264,13 @@
                                 <td><?php echo $counter['printer']; ?></td>
                                 <td>
                                     <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
+                                    if ($this->session->userdata('user_level') == '1') {
                                         ?>
                                         <a class="btn btn-primary btn-sm" href="/soft/write_printer/">신규 등록</a>
                                         <?php
                                     }
                                     ?>
                                     <a class="btn btn-success k btn-sm" href="/soft/printer/"> 목록 바로가기</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>XP 업/다운</td>
-                                <td>전산실</td>
-                                <td><?php echo $counter['xp_down']; ?></td>
-                                <td>
-                                    <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
-                                        ?>
-                                        <a class="btn btn-primary btn-sm" href="/soft/write_xp_down/">신규 등록</a>
-                                        <?php
-                                    }
-                                    ?>
-                                    <a class="btn btn-success k btn-sm" href="/soft/xp_down/"> 목록 바로가기</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>MS-Office 관리대장</td>
-                                <td>전산실</td>
-                                <td><?php echo $counter['ms_up']; ?></td>
-                                <td>
-                                    <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
-                                        ?>
-                                        <a class="btn btn-primary btn-sm" href="/soft/write_ms_up/">신규 등록</a>
-                                        <?php
-                                    }
-                                    ?>
-                                    <a class="btn btn-success k btn-sm" href="/soft/ms_up/"> 목록 바로가기</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>Quark(쿽) 관리대장</td>
-                                <td>전산실</td>
-                                <td><?php echo $counter['quark_up']; ?></td>
-                                <td>
-                                    <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
-                                        ?>
-                                        <a class="btn btn-primary btn-sm" href="/soft/write_quark_up/">신규 등록</a>
-                                        <?php
-                                    }
-                                    ?>
-                                    <a class="btn btn-success k btn-sm" href="/soft/quark_up/"> 목록 바로가기</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td>아시아폰트 관리대장</td>
-                                <td>전산실</td>
-                                <td><?php echo $counter['asiafont_up']; ?></td>
-                                <td>
-                                    <?php
-                                    if ( $this -> session -> userdata('user_level') == '1') {
-                                        ?>
-                                        <a class="btn btn-primary btn-sm" href="/soft/write_asiafont_up/">신규 등록</a>
-                                        <?php
-                                    }
-                                    ?>
-                                    <a class="btn btn-success k btn-sm" href="/soft/asiafont_up/"> 목록 바로가기</a>
                                 </td>
                             </tr>
                             </tbody>

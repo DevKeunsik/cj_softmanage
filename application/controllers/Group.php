@@ -132,7 +132,7 @@ class Group extends CI_Controller
      */
     public function g_gs()
     {
-        $data['g_gs'] = $this->user_model->get_g_gs();
+        $data['g_gs'] = $this->user_model->get_g('gs');
         $this->load->view('list/computational/g_gs/g_list', $data);
     }
 
@@ -141,7 +141,7 @@ class Group extends CI_Controller
      */
     public function g_ad1()
     {
-        $data['g_ad1'] = $this->user_model->get_g_ad1();
+        $data['g_ad1'] = $this->user_model->get_g('ad1');
         $this->load->view('list/computational/g_ad1/g_ad1_list', $data);
     }
 
@@ -150,7 +150,7 @@ class Group extends CI_Controller
      */
     public function g_ad2()
     {
-        $data['g_ad2'] = $this->user_model->get_g_ad2();
+        $data['g_ad2'] = $this->user_model->get_g('ad2');
         $this->load->view('list/computational/g_ad2/g_ad2_list', $data);
     }
 
@@ -159,7 +159,7 @@ class Group extends CI_Controller
      */
     public function g_em_edit()
     {
-        $data['g_em_edit'] = $this->user_model->get_g_em_edit();
+        $data['g_em_edit'] = $this->user_model->get_g('em_edit');
         $this->load->view('list/computational/g_em_edit/g_em_edit_list', $data);
     }
 
@@ -168,17 +168,8 @@ class Group extends CI_Controller
      */
     public function g_tv()
     {
-        $data['g_tv'] = $this->user_model->get_g_tv();
+        $data['g_tv'] = $this->user_model->get_g('tv');
         $this->load->view('list/computational/g_tv/g_tv_list', $data);
-    }
-
-    /*
-     * 기타 그룹원 불러오기
-     */
-    public function g_etc()
-    {
-        $data['g_etc'] = $this->user_model->get_g_etc();
-        $this->load->view('list/computational/g_etc/g_etc_list', $data);
     }
 
     /*
@@ -191,7 +182,10 @@ class Group extends CI_Controller
         $user_idx = $this->uri->segment(3);
         //$data['g_view'] = $this->group_model->get_g_view($user_idx);
         $data['view_user'] = $this->group_model->get_view_user($user_idx);
-        $data['view_moniter'] = $this->group_model->get_view_moniter($user_idx);
+
+        $data['view'] = $this->group_model->get_view_all($user_idx);
+
+        /*$data['view_moniter'] = $this->group_model->get_view_moniter($user_idx);
         $data['view_pc'] = $this->group_model->get_view_pc($user_idx);
         $data['view_keyboard'] = $this->group_model->get_view_keyboard($user_idx);
         $data['view_mouse'] = $this->group_model->get_view_mouse($user_idx);
@@ -204,7 +198,7 @@ class Group extends CI_Controller
         $data['view_quark'] = $this->group_model->get_view_quark($user_idx);
         $data['view_adobe'] = $this->group_model->get_view_adobe($user_idx);
         $data['view_font'] = $this->group_model->get_view_font($user_idx);
-        $data['view_compress'] = $this->group_model->get_view_compress($user_idx);
+        $data['view_compress'] = $this->group_model->get_view_compress($user_idx);*/
         
 
         $this->load->view('list/computational/g_view', $data);

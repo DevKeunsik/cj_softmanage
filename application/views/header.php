@@ -19,11 +19,11 @@
     <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
     <!-- font icon -->
-    <link href="/assets/css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/elegant-icons-style.css" rel="stylesheet"/>
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- full calendar css-->
-    <link href="/assets/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-    <link href="/assets/assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+    <link href="/assets/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet"/>
+    <link href="/assets/assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet"/>
     <!-- easy pie chart-->
     <link href="/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
     <!-- owl carousel -->
@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="/assets/css/fullcalendar.css">
     <link href="/assets/css/widgets.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
-    <link href="/assets/css/style-responsive.css" rel="stylesheet" />
+    <link href="/assets/css/style-responsive.css" rel="stylesheet"/>
     <link href="/assets/css/xcharts.min.css" rel=" stylesheet">
     <link href="/assets/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
@@ -50,22 +50,23 @@
 
     <header class="header dark-bg">
         <div class="toggle-nav">
-            <div class="icon-reorder tooltips" data-original-title="sidebar 접기/펼치기" data-placement="bottom"><i class="icon_menu"></i></div>
+            <div class="icon-reorder tooltips" data-original-title="sidebar 접기/펼치기" data-placement="bottom">
+                <i class="icon_menu"></i></div>
         </div>
 
         <!--logo start-->
-        <a href="http://sm.nzinedev.com" class="logo"><span class="lite">(주)</span>청주교차로</a>
+        <a href="javascript:;" class="logo"><span class="lite"></span>Admin</a>
         <!--logo end-->
 
         <div class="top-nav notification-row">
             <!-- notificatoin dropdown start-->
             <ul class="nav pull-right top-menu">
                 <?php
-                if ( $this -> session -> userdata('logged_in') == TRUE) {
+                if ($this->session->userdata('logged_in') == TRUE) {
                     ?>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            관리자(<?php echo $this -> session -> userdata('username');?>)님 환영합니다.
+                            관리자(<?php echo $this->session->userdata('username'); ?>)님 환영합니다.
                             <b class="caret"></b>
                         </a>
 
@@ -88,11 +89,11 @@
 
     <!--sidebar start-->
     <aside>
-        <div id="sidebar"  class="nav-collapse ">
+        <div id="sidebar" class="nav-collapse ">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu">
                 <li class="active">
-                    <a class="" href="http://sm.nzinedev.com">
+                    <a class="" href="/">
                         <i class="icon_house_alt"></i>
                         <span>Dashboard</span>
                     </a>
@@ -104,7 +105,6 @@
                         <span class="menu-arrow arrow_carrot-right"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="#">서버 - 필요시구현</a></li>
                         <li><a class="" href="/soft/keep_pc">보관물품</a></li>
                     </ul>
                 </li>
@@ -120,7 +120,6 @@
                         <li><a class="" href="/group/g_ad2">광고2부</a></li>
                         <li><a class="" href="/group/g_em_edit">리크루트/편집</a></li>
                         <li><a class="" href="/group/g_tv">여행사업팀</a></li>
-                        <li><a class="" href="/group/g_etc">기타</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -130,9 +129,9 @@
                         <span class="menu-arrow arrow_carrot-right"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="/soft/progress_list">진행</a></li>
-                        <li><a class="" href="/soft/keep_list">보관</a></li>
-                        <li><a class="" href="/soft/stop_list">사용불가</a></li>
+                        <li><a class="" href="/soft/lists?state=Y">진행</a></li>
+                        <li><a class="" href="/soft/lists?state=R">보관</a></li>
+                        <li><a class="" href="/soft/lists?state=N">사용불가</a></li>
                     </ul>
                 </li>
                 <li>
@@ -145,38 +144,6 @@
                     <a class="" href="/soft/printer">
                         <i class="icon_genius"></i>
                         <span>프린터</span>
-
-                    </a>
-
-                </li>
-                <li>
-                    <a class="" href="/soft/xp_down">
-                        <i class="icon_genius"></i>
-                        <span>XP 업/다운</span>
-
-                    </a>
-
-                </li>
-                <li>
-                    <a class="" href="/soft/ms_up">
-                        <i class="icon_genius"></i>
-                        <span>MS-Office</span>
-
-                    </a>
-
-                </li>
-                <li>
-                    <a class="" href="/soft/quark_up">
-                        <i class="icon_genius"></i>
-                        <span>Quark(쿽)</span>
-
-                    </a>
-
-                </li>
-                <li>
-                    <a class="" href="/soft/asiafont_up">
-                        <i class="icon_genius"></i>
-                        <span>아시아폰트</span>
 
                     </a>
 
